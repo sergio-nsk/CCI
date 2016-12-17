@@ -2,6 +2,7 @@
 // other.
 
 #include <iostream>
+#include <algorithm>
 
 #include "test.hpp"
 
@@ -23,6 +24,11 @@ bool checkPermutation(std::string &&one, std::string &&two)
     return true;
 }
 
+bool checkPermutationStd(std::string &&one, std::string &&two)
+{
+    return std::is_permutation(one.begin(), one.end(), two.begin(), two.end());
+}
+
 void printResult(bool result, std::string &&one, std::string &&two)
 {
     if (result)
@@ -34,8 +40,12 @@ void printResult(bool result, std::string &&one, std::string &&two)
 int main()
 {
     test(checkPermutation, printResult, "TestPermutation", "PermutationTest");
+    test(checkPermutationStd, printResult, "TestPermutation", "PermutationTest");
     test(checkPermutation, printResult, "TestPermutation", "PeermutatTstion");
+    test(checkPermutationStd, printResult, "TestPermutation", "PeermutatTstion");
     test(checkPermutation, printResult, "TestPermutation", "RotationTest");
+    test(checkPermutationStd, printResult, "TestPermutation", "RotationTest");
     test(checkPermutation, printResult, "TestPermutation", "Permutationtest");
+    test(checkPermutationStd, printResult, "TestPermutation", "Permutationtest");
     return 0;
 }
