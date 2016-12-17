@@ -7,11 +7,7 @@
 #include <codecvt>
 #include <string>
 
-auto test = [](auto &&func, auto &&printResult, auto &&...params)
-{
-    auto &&result = std::forward<decltype(func)>(func) (std::forward<decltype(params)>(params)...);
-    std::forward<decltype(printResult)>(printResult) (result, std::forward<decltype(params)>(params)...);
-};
+#include "test.hpp"
 
 bool isUnique(const std::string &chars)
 {
@@ -60,11 +56,11 @@ auto printResultW = [](bool result, auto &&chars)
 
 int main()
 {
-    test(isUnique, printResult, std::string("IsUnique"));
-    test(isUnique, printResult, std::string("IsUniqueTest"));
-    test(isUniqueW, printResultW, std::wstring(L"IsUnique\u0423\u043d\u0438\u043a\u0430\u043b\u044c")); // IsUniqueУникаль
-    test(isUniqueW, printResultW, std::wstring(L"IsUnique\u0423\u043d\u0438\u043a\u0430\u043b\u044c\u043d\u044b\u0439")); // IsUniqueУникальный
-    test(isUniqueW, printResultW, std::wstring(L"z\u00df\u6c34\U0001f34c")); // zß水🍌
-    test(isUniqueW, printResultW, std::wstring(L"z\u00df\u6c34\U0001f34c\u00df")); // zß水🍌ß
+    test(isUnique, printResult, "IsUnique");
+    test(isUnique, printResult, "IsUniqueTest");
+    test(isUniqueW, printResultW, L"IsUnique\u0423\u043d\u0438\u043a\u0430\u043b\u044c\u043d\u044b\u0439"); // IsUniqueУникальный
+    test(isUniqueW, printResultW, L"IsUnique\u0423\u043d\u0438\u043a\u0430\u043b\u044c"); // IsUniqueУникаль
+    test(isUniqueW, printResultW, L"z\u00df\u6c34\U0001f34c"); // zß水🍌
+    test(isUniqueW, printResultW, L"z\u00df\u6c34\U0001f34c\u00df"); // zß水🍌ß
     return 0;
 }

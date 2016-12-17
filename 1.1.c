@@ -1,3 +1,8 @@
+/*
+ Is Unique: Implement an algorithm to determine if a string has all unique characters. What if you
+ cannot use additional data structures?
+ */
+
 #include <stdint.h>
 #include <stdio.h>
 
@@ -18,7 +23,7 @@ int isUnique(const char *chars)
 
 void test(int (*func)(const char *), const char *chars)
 {
-    printf("%s %s\n", chars, func(chars) ? " passed" : " failed");
+    printf("\"%s\" %s\n", chars, func(chars) ? " passed" : " failed");
 }
 
 int main(int argc, char **argv)
