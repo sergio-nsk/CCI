@@ -10,8 +10,17 @@ bool checkPermutation(std::string &&one, std::string &&two)
     if (one.length() != two.length())
         return false;
 
-    one += one;
-    return one.find(two) != one.npos;
+    // I would use std::unordered_map instead of the array in case of std::wstring
+    int charCount[256] = { 0 };
+
+    for (int c : one)
+        ++charCount[c];
+
+    for (int c : two)
+        if (--charCount[c] < 0)
+            return false;
+
+    return true;
 }
 
 void printResult(bool result, std::string &&one, std::string &&two)
@@ -25,6 +34,7 @@ void printResult(bool result, std::string &&one, std::string &&two)
 int main()
 {
     test(checkPermutation, printResult, "TestPermutation", "PermutationTest");
+    test(checkPermutation, printResult, "TestPermutation", "PeermutatTstion");
     test(checkPermutation, printResult, "TestPermutation", "RotationTest");
     test(checkPermutation, printResult, "TestPermutation", "Permutationtest");
     return 0;
