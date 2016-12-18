@@ -12,6 +12,7 @@
 #include <array>
 #include <algorithm>
 #include <iostream>
+#include <bitset>
 
 #include "test.hpp"
 
@@ -28,6 +29,20 @@ bool isPalindromePermutation(const std::string &str)
     return std::count_if(charCount.begin(), charCount.end(), [](int cnt) { return cnt & 1; }) <= 1;
 }
 
+bool isPalindromePermutationBetter(const std::string &str)
+{
+    std::bitset<26> oddChars;
+
+    for (int c : str)
+        if (std::isalpha(c))
+        {
+            int bit = std::tolower(c) - 'a';
+            oddChars.set(bit, !oddChars.test(bit));
+        }
+
+    return oddChars.count() <= 1;
+}
+
 int main()
 {
     auto print = [](bool result, const std::string &str)
@@ -36,8 +51,12 @@ int main()
     };
 
     test(isPalindromePermutation, print, "Tact Coa");
+    test(isPalindromePermutationBetter, print, "Tact Coa");
     test(isPalindromePermutation, print, "Tact Coat");
+    test(isPalindromePermutationBetter, print, "Tact Coat");
     test(isPalindromePermutation, print, "Tacto Coa");
+    test(isPalindromePermutationBetter, print, "Tacto Coa");
     test(isPalindromePermutation, print, "Ota.c,t:o Co a");
+    test(isPalindromePermutationBetter, print, "Ota.c,t:o Co a");
     return 0;
 }

@@ -13,6 +13,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <ctype.h>
+#include <stdint.h>
 
 int isPalindromePermutation(const char *str)
 {
@@ -32,9 +33,31 @@ int isPalindromePermutation(const char *str)
     return oddCnt < 2;
 }
 
+int isPalindromePermutationBetter(const char *str)
+{
+    uint32_t oddChars = 0;
+
+    for ( ; *str; ++str)
+    {
+        if (isalpha(*str))
+        {
+            uint32_t bit = 1U << (tolower(*str) - 'a');
+            if (oddChars & bit)
+                oddChars &= ~bit;
+            else
+                oddChars |= bit;
+        }
+    }
+
+    return oddChars == 0 || ((oddChars - 1) & oddChars) == 0;
+    // 00100000 -> 00011111 & 00100000 -> 0
+    // 00110000 -> 00101111 & 00110000 -> 00100000
+}
+
 void test(const char *str)
 {
     printf("\"%s\" %s %s\n", str, isPalindromePermutation(str) ? "is" : "is not", "palindrome permutation");
+    printf("\"%s\" %s %s\n", str, isPalindromePermutationBetter(str) ? "is" : "is not", "palindrome permutation");
 }
 
 int main(int argc, char **argv)
