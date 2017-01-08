@@ -30,6 +30,11 @@ public:
         return rawArray.at(N * row + col);
     }
 
+    const T &at(size_t row, size_t col) const
+    {
+        return rawArray.at(N * row + col);
+    }
+
     array2d<T, M, N> &fillRow(size_t row, int value = 0)
     {
         for (size_t col = 0; col < N; ++col)
@@ -90,7 +95,7 @@ bool zero(array2d<T, M, N> &matrix)
 }
 
 template<typename T, size_t M, size_t N>
-void print(bool result, array2d<T, M, N> matrix)
+void print(bool result, const array2d<T, M, N> &matrix)
 {
     for (size_t row = 0; row < matrix.RowCount; ++row)
     {
