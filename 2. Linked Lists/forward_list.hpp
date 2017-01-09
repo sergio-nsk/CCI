@@ -33,7 +33,12 @@ public:
         head = nullptr;
     }
 
-  private:
+  public:
+    // template <typename T>
+    // class Node : std::pair<T, Node<T> *>
+    // {
+    // };
+
     struct Node
     {
         T value;
@@ -85,6 +90,11 @@ public:
         const T &operator *() const
         {
             return ptr->value;
+        }
+
+        Node *get()
+        {
+            return ptr;
         }
 
       private:
