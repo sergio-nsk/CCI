@@ -36,15 +36,14 @@ void printList(bool result, const forward_list<T> &list)
 int main()
 {
     forward_list<int> list({0, 1, 2, 3, 4, 5, 6, 7, 8, 9});
-    auto i = list.begin();
-    ++i;
-    ++i;
-    ++i;
-    ++i;
-    ++i;
     printList<int>(true, list);
     std::cout << " --> ";
-    deleteMiddleNode<int>(i.get()); // i becomes invalid
+
+    auto detached = list.detach();
+    auto node = detached->next->next->next->next->next;
+    deleteMiddleNode<int>(node); // i becomes invalid
+
+    list.attach(detached);
     printList<int>(true, list);
     std::cout << std::endl;
 

@@ -4,33 +4,38 @@ template <typename T>
 class forward_list
 {
 public:
-    forward_list(std::initializer_list<T> &&initVals)
+    forward_list() : head(nullptr), last(nullptr), len(0)
     {
-        Node *lastNode = nullptr;
+    }
+
+    forward_list(forward_list &&rhv)
+    {
+        head = rhv.head;
+        last = rhv.last;
+        len = rhv.len;
+        rhv.head = rhv.last = nullptr;
+        rhv.len = 0;
+    }
+
+    forward_list(std::initializer_list<T> &&initVals) : forward_list()
+    {
         for (auto &v : initVals)
-        {
-            auto newNode = new Node(v);
-            if (!lastNode)
-                head = lastNode = newNode;
-            else
-                lastNode = lastNode->next = newNode;
-        }
+            push_back(v);
     }
 
     forward_list<T> &operator = (forward_list<T> &&r)
     {
-        while (begin() != end())
-            erase(begin());
+        clear();
         head = r.head;
+        len = r.len;
         r.head = nullptr;
+        r.len = 0;
         return *this;
     }
 
     ~forward_list()
     {
-        while (begin() != end())
-            erase(begin());
-        head = nullptr;
+        clear();
     }
 
   public:
@@ -92,11 +97,6 @@ public:
             return ptr->value;
         }
 
-        Node *get()
-        {
-            return ptr;
-        }
-
       private:
         Node *ptr;
         Node *prev;
@@ -145,9 +145,84 @@ public:
         if (head == d)
             head = next;
         delete d;
+        --len;
         return iterator(next, prev);
     }
 
-private:
+    void clear()
+    {
+        while (begin() != end())
+            erase(begin());
+        head = nullptr;
+        last = nullptr;
+        len = 0;
+    }
+
+    Node *detach()
+    {
+        Node *detached = head;
+        head = nullptr;
+        last = nullptr;
+        len = 0;
+        return detached;
+    }
+
+    void attach(Node *detached)
+    {
+        if (head != nullptr)
+            clear();
+        head = detached;
+    }
+
+    void push_front(const T &value)
+    {
+        Node *node = new Node(value);
+        if (!head)
+            last = head = node;
+        else
+        {
+            node->next = head;
+            head = node;
+        }
+        ++len;
+    }
+
+    void push_back(const T &value)
+    {
+        Node *node = new Node(value);
+        if (!head)
+            last = head = node;
+        else
+        {
+            if (!last)
+            {
+                last = head;
+                while (last->next)
+                    last = last->next;
+            }
+            last->next = node;
+            last = node;
+        }
+        ++len;
+    }
+
+    size_t length() const
+    {
+        if (len == 0 && head)
+        {
+            last = head;
+            len = 1;
+            while (last->next)
+            {
+                last = last->next;
+                ++len;
+            }
+        }
+        return len;
+    }
+
+  private:
     Node *head;
+    mutable Node *last; // initialized delayed, used for fast push_back()
+    mutable size_t len;
 };

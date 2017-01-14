@@ -59,7 +59,9 @@ int main()
     printList<int>(true, list);
     std::cout << " --> ";
 
-    partition(list.begin().get(), 5);
+    auto detached = list.detach();
+    partition(detached, 5);
+    list.attach(detached);
 
     printList<int>(true, list);
     std::cout << std::endl;
@@ -68,7 +70,9 @@ int main()
     printList<int>(true, list);
     std::cout << " --> ";
 
-    partition(list.begin().get(), 5);
+    detached = list.detach();
+    partition(detached, 5);
+    list.attach(detached);
 
     printList<int>(true, list);
     std::cout << std::endl;
@@ -77,7 +81,9 @@ int main()
     printList<int>(true, list);
     std::cout << " --> ";
 
-    partition(list.begin().get(), 5);
+    detached = list.detach();
+    partition(detached, 5);
+    list.attach(detached);
 
     printList<int>(true, list);
     std::cout << std::endl;
