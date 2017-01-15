@@ -30,6 +30,13 @@ const typename forward_list<T>::Node *findIntersect(forward_list<T> &first, forw
     auto firstLen = first.length();
     auto secondLen = second.length();
 
+    firstKth = secondKth = 0;
+
+    if (first.lastNode() != second.lastNode())
+    {
+        return nullptr;
+    }
+
     auto firstHead = first.headNode();
     auto secondHead = second.headNode();
 
@@ -63,8 +70,6 @@ const typename forward_list<T>::Node *findIntersect(forward_list<T> &first, forw
             firstKth = Kth;
         }
     }
-    else
-        firstKth = secondKth = 0;
     return node;
 }
 
@@ -90,7 +95,7 @@ void printResult(const typename forward_list<T>::Node *result, forward_list<T> &
         printList(first);
         std::cout << " intersects with " << secondKth << "th element of ";
         printList(second);
-        std::cout << std::endl;
+        std::cout << " with value " << result->value << std::endl;
     }
     else
     {

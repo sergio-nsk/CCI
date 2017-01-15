@@ -179,6 +179,17 @@ public:
         return head;
     }
 
+    const Node *lastNode() const
+    {
+        if (!last && head)
+        {
+            last = head;
+            while (last->next)
+                last = last->next;
+        }
+        return last;
+    }
+
     void push_front(const T &value)
     {
         Node *node = new Node(value);
