@@ -174,6 +174,11 @@ public:
         head = detached;
     }
 
+    const Node *headNode() const
+    {
+        return head;
+    }
+
     void push_front(const T &value)
     {
         Node *node = new Node(value);
