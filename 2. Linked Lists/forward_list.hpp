@@ -179,7 +179,7 @@ public:
         return head;
     }
 
-    const Node *lastNode() const
+    Node *lastNode()
     {
         if (!last && head)
         {
