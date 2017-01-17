@@ -32,5 +32,5 @@
     "command": "g++",
     "isShellCommand": true,
     "showOutput": "always",
-    "args": ["-g", "-std=gnu++14", "-I.", "-Wall", "${file}"]
+    "args": ["-g", "-std=c++14", "-I.", "-Wall", "-pedantic", "${file}", "-o", "${fileDirname}/${fileBasenameNoExtension}"]
 }
