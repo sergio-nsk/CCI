@@ -1,11 +1,16 @@
 {
     "language": "en_US",
     "ignoreWordsList": [
+        "stackSize",
+        "nullptr",
+        "typename",
+        "cout",
+        "const",
+        "bool",
+        "struct"
     ],
     "documentTypes": [
-        "markdown",
-        "latex",
-        "plaintext"
+        "cpp"
     ],
     "ignoreRegExp": [
         "/\\\\(.*\\\\.(jpg|jpeg|png|md|gif|svg|pdf|PDF|SVG|JPG|JPEG|PNG|MD|GIF)\\\\)/g",
