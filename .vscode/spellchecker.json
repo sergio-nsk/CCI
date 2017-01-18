@@ -7,9 +7,14 @@
         "cout",
         "const",
         "bool",
-        "struct"
+        "struct",
+        "deque",
+        "iostream"
     ],
     "documentTypes": [
+        "markdown",
+        "latex",
+        "plaintext",
         "cpp"
     ],
     "ignoreRegExp": [
