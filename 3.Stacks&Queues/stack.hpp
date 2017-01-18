@@ -8,12 +8,8 @@ public:
     {
     }
 
-    Stack(Stack &&other)
+    Stack(Stack &&other) : top(std::move(other.top)), stackSize(std::move(other.stackSize))
     {
-        top = other.top;
-        stackSize = other.stackSize;
-        other.top = nullptr;
-        other.stackSize = 0;
     }
 
     ~Stack()
