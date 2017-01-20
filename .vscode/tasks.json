@@ -30,7 +30,18 @@
 {
     "version": "0.1.0",
     "command": "g++",
-    "isShellCommand": true,
     "showOutput": "always",
-    "args": ["-g", "-std=c++14", "-I.", "-Wall", "-pedantic", "${file}", "-o", "${fileDirname}/${fileBasenameNoExtension}"]
+    "args": ["-g", "-std=c++14", "-I.", "-Wall", "-pedantic", "${file}", "-o", "${fileDirname}/${fileBasenameNoExtension}"],
+    "problemMatcher": {
+        "owner": "cpp",
+        "fileLocation": ["absolute"],
+        "pattern": {
+            "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+            "file": 1,
+            "line": 2,
+            "column": 3,
+            "severity": 4,
+            "message": 5
+        }
+    }
 }
