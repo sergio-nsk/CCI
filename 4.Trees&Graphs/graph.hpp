@@ -100,3 +100,33 @@ Graph<State> getExampleGraph()
     graph[6]->addChild(graph[5]);
     return graph;
 }
+
+template <typename State>
+Graph<State> getExampleGraph2()
+{
+    Graph<State> graph;
+    for (int i = 0; i < 4; ++i)
+        graph.addNode();
+    graph[0]->addChild(graph[1]);
+    graph[1]->addChild(graph[2]);
+    graph[2]->addChild(graph[0]);
+    graph[3]->addChild(graph[2]);
+    return graph;
+}
+
+template <typename State>
+Graph<State> getExampleGraph3()
+{
+    Graph<State> graph;
+    for (int i = 0; i < 6; ++i)
+        graph.addNode();
+    graph[0]->addChild(graph[1]);
+    graph[0]->addChild(graph[4]);
+    graph[0]->addChild(graph[5]);
+    graph[1]->addChild(graph[3]);
+    graph[1]->addChild(graph[4]);
+    graph[2]->addChild(graph[1]);
+    graph[3]->addChild(graph[2]);
+    graph[3]->addChild(graph[4]);
+    return graph;
+}

@@ -1,12 +1,6 @@
 // Поместите параметры в этот файл, чтобы перезаписать параметры по умолчанию и пользовательские параметры.
 {
-    "editor.fontSize": 13,
-    "editor.wrappingIndent": "indent",
-    "editor.formatOnType": true,
-    "editor.lineHeight": 14,
-    "markdown.preview.fontSize": 13,
-    "terminal.integrated.fontSize": 13,
     "code-runner.executorMap": {
-        "cpp": "cd $dir && ./$fileNameWithoutExt"
+        "cpp": "cd $dir && g++ -std=c++14 -Wall -I. -g $fullFileName && ./a.out"
     }
 }
