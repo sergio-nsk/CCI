@@ -11,6 +11,7 @@
             "cwd": "${workspaceRoot}",
             "environment": [],
             "externalConsole": true,
+            "visualizerFile": "/home/sergej/.config/Code/User/visualizer.natvis",
             "linux": {
                 "MIMode": "gdb",
                 "setupCommands": [
