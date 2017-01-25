@@ -27,7 +27,6 @@ bool checkHeight(size_t height, size_t &minHeight, size_t &maxHeight)
 template <typename T, size_t N>
 bool walkTree(const NodePtr<T, N> &node, int height, size_t &minHeight, size_t &maxHeight)
 {
-    ++height;
     if (node->getChilds().empty()) // leaf
     {
         if (!checkHeight(height, minHeight, maxHeight))
@@ -38,7 +37,7 @@ bool walkTree(const NodePtr<T, N> &node, int height, size_t &minHeight, size_t &
     {
         if (c)
         {
-            if (!walkTree<T, N>(c, height, minHeight, maxHeight))
+            if (!walkTree<T, N>(c, height + 1, minHeight, maxHeight))
                 return false;
         }
         else if (!checkHeight(height, minHeight, maxHeight))
