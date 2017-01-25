@@ -1,6 +1,7 @@
 // Validate BST: Implement a function to check if a binary tree is a binary search tree.
 
 #include <list>
+#include <limits>
 #include "tree.hpp"
 
 template <typename T>
@@ -36,35 +37,39 @@ BinaryTree<T> treeFromArray(const T *array, size_t size)
 }
 
 template <typename T>
-bool checkNode(const NodePtr<T> &node)
+bool checkNode(const NodePtr<T> &node, const T *minValue, const T *maxValue)
 {
     if (!node)
         return true;
+    if (minValue && node->getValue() <= *minValue)
+        return false;
+    if (maxValue && node->getValue() > *maxValue)
+        return false;
 
-    auto &left = node->getLeft();
-    auto &right = node->getRight();
-    
-    if (left && node->getValue() < left->getValue())
-        return false;
-    if (right && node->getValue() >= right->getValue())
-        return false;
-    return checkNode<T>(left) && checkNode<T>(right);
+    return checkNode<T>(node->getLeft(), minValue, &node->getValue()) && checkNode<T>(node->getRight(), &node->getValue(), maxValue);
 }
 
 template <typename T>
 bool isValidBST(const BinaryTree<T> &tree)
 {
-    return checkNode<T>(tree.getRoot());
+    return checkNode<T>(tree.getRoot(), nullptr, nullptr);
 }
 
 int main()
 {
+    // valid BST
     std::vector<int> array({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19});
     auto tree = treeFromArray(&array[0], array.size());
     tree.printTree(31);
     std::cout << "The tree is " << (isValidBST<int>(tree) ? "" : "NOT ") << "binary search tree" << std::endl;
 
+    // invalid BST
     tree.getRoot()->getRight()->getRight()->getRight()->setLeftChild(std::make_shared<Node<int>>(19));
+    tree.printTree(31);
+    std::cout << "The tree is " << (isValidBST<int>(tree) ? "" : "NOT ") << "binary search tree" << std::endl;
+
+    // invalid BST
+    tree.getRoot()->getRight()->getRight()->getRight()->setLeftChild(std::make_shared<Node<int>>(15));
     tree.printTree(31);
     std::cout << "The tree is " << (isValidBST<int>(tree) ? "" : "NOT ") << "binary search tree" << std::endl;
     return 0;
