@@ -3,9 +3,6 @@
 
 // This task is mostly done in the function printTree :-)
 
-#include <iostream>
-#include <iomanip>
-#include <queue>
 #include <vector>
 #include <list>
 #include "tree.hpp"
@@ -74,40 +71,6 @@ BinaryTree<T> treeFromArray(const T *array, size_t size)
 }
 
 template <typename T>
-void printTree(const BinaryTree<T> &tree, size_t size)
-{
-    const int w = 3; // width of a node and space between nodes
-    int margin = size / 2;
-    std::queue<NodePtr<T>> queue;
-    std::queue<NodePtr<T>> childs;
-    queue.push(tree.getRoot());
-    std::cout << "Tree:" << std::endl;
-
-    do 
-    {
-        std::cout << std::string(margin * w, ' ');
-        while (!queue.empty())
-        {
-            if (!queue.front())
-                std::cout << std::string(2 * (margin  + 1)* w, ' ');
-            else
-            {
-                std::cout << std::setw(3) << queue.front()->getValue() << std::string((2 * margin + 1) * w, ' ');
-                childs.push(queue.front()->getLeft());
-                childs.push(queue.front()->getRight());
-            }
-            queue.pop();
-
-        }
-        std::cout << std::endl;
-        queue.swap(childs);
-        if (margin == 0)
-            break;
-        margin = (margin - 1) / 2;
-    } while (true);
-}
-
-template <typename T>
 void printNodes(const std::list<NodeList<T>> &nodes)
 {
     int depth = 0;
@@ -135,7 +98,7 @@ int main()
 
     array = {0, 1};
     tree = treeFromArray(&array[0], array.size());
-    printTree(tree, 3);
+    tree.printTree(3);
     nodes = getNodes(tree);
     printNodes<int>(nodes);
 
@@ -157,7 +120,7 @@ int main()
 
     array = {0, 1, 2, 3, 4, 5, 6};
     tree = treeFromArray(&array[0], array.size());
-    printTree(tree, 7);
+    tree.printTree(7);
     nodes = getNodes(tree);
     printNodes<int>(nodes);
 
@@ -171,7 +134,7 @@ int main()
 
     array = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19};
     tree = treeFromArray(&array[0], array.size());
-    printTree(tree, 31);
+    tree.printTree(31);
     nodes = getNodes(tree);
     printNodes<int>(nodes);
     return 0;
