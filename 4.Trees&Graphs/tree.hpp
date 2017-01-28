@@ -20,6 +20,14 @@ public:
         {
         }
 
+        Node(T &&v, const std::shared_ptr<Node> &p) : value(std::move(v)), parent(p)
+        {
+        }
+
+        Node(const T &v, const std::shared_ptr<Node> &p) : value(v), parent(p)
+        {
+        }
+
         const T& getValue() const
         {
             return value;
@@ -67,9 +75,15 @@ public:
             childs[childs.size() - 1] = std::forward<U>(node);
         }
 
+        std::shared_ptr<Node> getParent()
+        {
+            return parent.lock();
+        }
+
     protected:
         T value;
         std::array<std::shared_ptr<Node>, N> childs;
+        std::weak_ptr<Node> parent;
     };
 
     const std::shared_ptr<Node> &getRoot() const
