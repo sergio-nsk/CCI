@@ -1,6 +1,7 @@
 #include <deque>
 #include <memory>
 #include <unordered_set>
+#include <unordered_map>
 
 template<typename T>
 struct WeakPtrHash : public std::unary_function<std::weak_ptr<T>, size_t>
@@ -28,6 +29,9 @@ public:
     class Node
     {
     public:
+        Node(const std::string &n) : name(n)
+        {
+        }
         virtual ~Node() {}
 
         bool isAdjacentFor(const std::shared_ptr<Node> &other) const
@@ -45,7 +49,13 @@ public:
             return childs;
         }
 
+        const std::string &Name() const
+        {
+            return name;
+        }
+
         State state;
+        std::string name;
 
     private:
         std::unordered_set<std::weak_ptr<Node>, WeakPtrHash<Node>, WeakPtrEqual<Node>> childs;
@@ -61,14 +71,21 @@ public:
         return s->isAdjacentFor(d);
     }
 
-    void addNode()
+    void addNode(const std::string &name = std::string())
     {
-        nodes.push_back(std::make_shared<Node>());
+        nodes.emplace_back(std::make_shared<Node>(name));
+        if (!name.empty())
+            namedNodes[name] = nodes.back();
     }
 
     std::shared_ptr<Node> &operator[] (size_t i)
     {
         return nodes[i];
+    }
+
+    std::shared_ptr<Node> &operator[] (const std::string &name)
+    {
+        return namedNodes.at(name);
     }
 
     const std::deque<std::shared_ptr<Node>> &getNodes() const
@@ -78,6 +95,7 @@ public:
 
 private:
     std::deque<std::shared_ptr<Node>> nodes;
+    std::unordered_map<std::string, std::shared_ptr<Node>> namedNodes;
 };
 
 template <typename State>
