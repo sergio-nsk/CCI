@@ -2,5 +2,6 @@
 {
     "code-runner.executorMap": {
         "cpp": "cd $dir && g++ -std=c++14 -Wall -I. -g $fullFileName && ./a.out"
-    }
+    },
+    "files.associations": {"*.cpp" : "cpp"}
 }
