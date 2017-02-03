@@ -43,6 +43,7 @@ public:
         return value;
     }
 
+    // Number of used limited stacks
     size_t size() const
     {
         return stacks.size();

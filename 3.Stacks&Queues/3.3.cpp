@@ -16,7 +16,7 @@ public:
     void push(U &&value)
     {
         if (stacks.isEmpty() || stacks.peek().size() >= Capacity)
-            stacks.push(Stack<T>());
+            stacks.push(Stack<T>()); // start new stack
         stacks.peek().push(std::forward<T>(value));
     }
 
@@ -33,6 +33,7 @@ public:
         return value;
     }
 
+    // Number of limited stacks
     size_t size() const
     {
         return stacks.size();
