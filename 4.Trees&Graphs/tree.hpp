@@ -104,6 +104,57 @@ public:
         return !root;
     }
 
+    class Iterator
+    {
+    public:
+        Iterator()
+        {
+        }
+        Iterator(const std::shared_ptr<Node> &node) : currNode(node)
+        {
+        }
+        std::shared_ptr<Node> operator * ()
+        {
+            return currNode.lock();
+        }
+
+        Iterator &operator ++ ()
+        {
+            auto node = currNode.lock();
+            if (!node)
+                currNode = std::shared_ptr<Node>();
+            if (node->getLeft())
+                currNode = node->getLeft();
+            else if (node->getRight())
+                currNode = node->getRight();
+            else
+            {
+                while (node->getParent() && node == node->getParent()->getRight())
+                    node = node->getParent();
+                currNode = node->getParent() ? node->getParent()->getRight() : node->getParent();
+            }
+            return *this;
+        }
+
+        bool operator != (const Iterator &rh)
+        {
+            return currNode.lock() != rh.currNode.lock();
+        }
+
+    private:
+        std::weak_ptr <Node> currNode;
+    };
+
+    Iterator end()
+    {
+        return Iterator();
+    }
+
+    Iterator begin()
+    {
+        return Iterator(getRoot());
+    }
+
     class TreeIsEmptyException {};
     
 protected:
