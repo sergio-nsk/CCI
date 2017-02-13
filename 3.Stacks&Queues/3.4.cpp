@@ -10,7 +10,7 @@ public:
     template <typename U>
     void add(U &&value)
     {
-        newValues.push(std::forward<T>(value));
+        newValues.push(std::forward<U>(value));
     }
 
     T peek()

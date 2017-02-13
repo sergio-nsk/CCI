@@ -16,7 +16,7 @@ public:
     template <typename U>
     void push(U &&value)
     {
-        stack.push(std::forward<T>(value));
+        stack.push(std::forward<U>(value));
         sorted = false;
     }
 

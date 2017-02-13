@@ -104,6 +104,57 @@ public:
         return !root;
     }
 
+    class Iterator
+    {
+    public:
+        Iterator()
+        {
+        }
+        Iterator(const std::shared_ptr<Node> &node) : currNode(node)
+        {
+        }
+        std::shared_ptr<Node> operator * ()
+        {
+            return currNode.lock();
+        }
+
+        Iterator &operator ++ ()
+        {
+            auto node = currNode.lock();
+            if (!node)
+                currNode = std::shared_ptr<Node>();
+            if (node->getLeft())
+                currNode = node->getLeft();
+            else if (node->getRight())
+                currNode = node->getRight();
+            else
+            {
+                while (node->getParent() && node == node->getParent()->getRight())
+                    node = node->getParent();
+                currNode = node->getParent() ? node->getParent()->getRight() : node->getParent();
+            }
+            return *this;
+        }
+
+        bool operator != (const Iterator &rh)
+        {
+            return currNode.lock() != rh.currNode.lock();
+        }
+
+    private:
+        std::weak_ptr <Node> currNode;
+    };
+
+    Iterator end()
+    {
+        return Iterator();
+    }
+
+    Iterator begin()
+    {
+        return Iterator(getRoot());
+    }
+
     class TreeIsEmptyException {};
     
 protected:
@@ -148,3 +199,36 @@ public:
         } while (true);
     }
 };
+
+template <typename T>
+using Node = typename BinaryTree<T>::Node;
+
+template <typename T>
+using NodePtr = std::shared_ptr<Node<T>>;
+
+#ifdef INCLUDE_HELPER
+
+// The function treeFromArray from the task 4.2 helps us to fill test trees.
+template <typename T>
+NodePtr<T> subtreeFromArray(const T *array, const NodePtr<T> &parent, int start, int end)
+{
+    if (end < start)
+        return nullptr;
+
+    int i = (start + end) / 2;
+    auto node = std::make_shared<Node<T>>(array[i], parent);
+    node->setLeftChild(subtreeFromArray(array, node, start, i - 1));
+    node->setRightChild(subtreeFromArray(array, node, i + 1, end));
+    return node;
+}
+
+template <typename T>
+BinaryTree<T> treeFromArray(const T *array, size_t size)
+{
+    BinaryTree<T> tree;
+    tree.setRoot(subtreeFromArray(array, nullptr, 0, size - 1));
+
+    return tree;
+}
+
+#endif

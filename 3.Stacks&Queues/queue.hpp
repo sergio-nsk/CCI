@@ -21,7 +21,7 @@ public:
     template <typename U>
     void add(U &&value)
     {
-        auto n = new Node(std::forward<T>(value));
+        auto n = new Node(std::forward<U>(value));
         if (!first)
             first = n;
         else

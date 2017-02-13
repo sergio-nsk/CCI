@@ -5,12 +5,6 @@
 #include "tree.hpp"
 
 template <typename T>
-using Node = typename BinaryTree<T>::Node;
-
-template <typename T>
-using NodePtr = std::shared_ptr<Node<T>>;
-
-template <typename T>
 NodePtr<T> subtreeFromArray(const T *array, int start, int end)
 {
     if (end < start)

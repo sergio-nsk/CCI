@@ -90,7 +90,7 @@ public:
             cats.add(std::move(cat));
         }
         else
-            throw BadAnimal();
+            throw BadAnimalException();
     }
 
     std::shared_ptr<Animal> dequeueAny()
@@ -115,7 +115,7 @@ public:
         return std::static_pointer_cast<Animal>(dogs.remove());
     }
 
-    class BadAnimal {};
+    class BadAnimalException {};
 
 private:
     Queue<std::shared_ptr<Dog>> dogs;
@@ -126,7 +126,7 @@ private:
 int main()
 {
     Shelter shelter;
-    for (auto &&name : {"Dog 1", "Cat 1", "Dog 2", "Dog 3 ", "Cat 2", "Cat 3", "Cat 4", "Dog 4", "Dog 5", "Dog 6", "Cat 5", "Cat 6", "Dog 7", "Dog 8", "Cat 7", "Dog 9"})
+    for (auto name : {"Dog 1", "Cat 1", "Dog 2", "Dog 3 ", "Cat 2", "Cat 3", "Cat 4", "Dog 4", "Dog 5", "Dog 6", "Cat 5", "Cat 6", "Dog 7", "Dog 8", "Cat 7", "Dog 9"})
     {
         if (name[0] == 'D')
             shelter.enqueue(Animal::create<Dog>(std::move(name)));
