@@ -2,14 +2,52 @@
 #include <memory>
 #include <utility>
 #include <queue>
+#include <stack>
 #include <iostream>
 #include <iomanip>
 
-template <typename T, size_t N>
+template <typename T, size_t N, bool WithParentRefs = false>
 class Tree
 {
+private:
+    template <typename Node, bool WithParent>
+    class NodeBase
+    {
+    public:
+        NodeBase()
+        {
+        }
+
+        NodeBase(const std::shared_ptr<Node> &p) : parent(p)
+        {
+        }
+
+        std::shared_ptr<Node> getParent()
+        {
+            return parent.lock();
+        }
+    private:
+        std::weak_ptr<Node> parent;
+    };
+
+    template <typename Node>
+    class NodeBase<Node, false>
+    {
+    public:
+        NodeBase()
+        {
+        }
+
+        NodeBase(const std::shared_ptr<Node> &p)
+        {
+        }
+
+    private:
+    };
+
 public:
-    class Node
+
+    class Node : public NodeBase<Node, WithParentRefs>
     {
     public:
         Node(T &&v) : value(std::move(v))
@@ -20,11 +58,11 @@ public:
         {
         }
 
-        Node(T &&v, const std::shared_ptr<Node> &p) : value(std::move(v)), parent(p)
+        Node(T &&v, const std::shared_ptr<Node> &p) : NodeBase<Node, WithParentRefs>(p), value(std::move(v))
         {
         }
 
-        Node(const T &v, const std::shared_ptr<Node> &p) : value(v), parent(p)
+        Node(const T &v, const std::shared_ptr<Node> &p) : NodeBase<Node, WithParentRefs>(p), value(v)
         {
         }
 
@@ -75,15 +113,9 @@ public:
             childs[childs.size() - 1] = std::forward<U>(node);
         }
 
-        std::shared_ptr<Node> getParent()
-        {
-            return parent.lock();
-        }
-
     protected:
         T value;
         std::array<std::shared_ptr<Node>, N> childs;
-        std::weak_ptr<Node> parent;
     };
 
     const std::shared_ptr<Node> &getRoot() const
@@ -104,18 +136,16 @@ public:
         return !root;
     }
 
-    class Iterator
+    template <typename Iterator, bool WithParent>
+    class IteratorBase
     {
     public:
-        Iterator()
+        IteratorBase()
         {
         }
-        Iterator(const std::shared_ptr<Node> &node) : currNode(node)
+        
+        IteratorBase(const std::shared_ptr<Node> &node) : currNode(node)
         {
-        }
-        std::shared_ptr<Node> operator * ()
-        {
-            return currNode.lock();
         }
 
         Iterator &operator ++ ()
@@ -136,13 +166,76 @@ public:
             return *this;
         }
 
-        bool operator != (const Iterator &rh)
+    protected:
+        std::weak_ptr <Node> currNode;
+    };
+
+    template <typename Iterator>
+    class IteratorBase<Iterator, false>
+    {
+    public:
+        IteratorBase()
         {
-            return currNode.lock() != rh.currNode.lock();
+        }
+        
+        IteratorBase(const std::shared_ptr<Node> &node) : currNode(node)
+        {
         }
 
-    private:
-        std::weak_ptr <Node> currNode;
+        Iterator &operator ++ ()
+        {
+            auto node = currNode.lock();
+            if (!node)
+                currNode = std::shared_ptr<Node>();
+            if (node->getLeft())
+            {
+                parents.emplace(node);
+                currNode = node->getLeft();
+            }
+            else if (node->getRight())
+            {
+                parents.emplace(node);
+                currNode = node->getRight();
+            }
+            else
+            {
+                while (!parents.empty() && node == parents.top()->getRight())
+                {
+                    node = parents.top();
+                    parents.pop();
+                }
+                currNode = !parents.empty() ? parents.top()->getRight() : std::shared_ptr<Node>();
+            }
+            return *static_cast<Iterator *>(this);
+        }
+
+    protected:
+        std::weak_ptr<Node> currNode;
+        std::stack<std::shared_ptr<Node>> parents;
+    };
+
+    class Iterator : public IteratorBase<Iterator, WithParentRefs>
+    {
+        using Base = IteratorBase<Iterator, WithParentRefs>;
+
+    public:
+        Iterator()
+        {
+        }
+
+        Iterator(const std::shared_ptr<Node> &node) : Base(node)
+        {
+        }
+
+        std::shared_ptr<Node> operator * ()
+        {
+            return Base::currNode.lock();
+        }
+
+        bool operator != (const Iterator &rh)
+        {
+            return Base::currNode.lock() != rh.currNode.lock();
+        }
     };
 
     Iterator end()
@@ -161,18 +254,18 @@ protected:
     std::shared_ptr<Node> root;
 };
 
-template <typename T>
-class BinaryTree : public Tree<T, 2>
+template <typename T, bool WithParent = false>
+class BinaryTree : public Tree<T, 2, WithParent>
 {
 public:
     void printTree(size_t size)
     {
-        using Node = typename Tree<T, 2>::Node;
+        using Node = typename Tree<T, 2, WithParent>::Node;
         const int w = 3; // width of a node and space between nodes
         int margin = size / 2;
         std::queue<std::shared_ptr<Node>> queue;
         std::queue<std::shared_ptr<Node>> childs;
-        queue.push(Tree<T, 2>::root);
+        queue.push(Tree<T, 2, WithParent>::root);
         std::cout << "Tree:" << std::endl;
 
         do 
@@ -200,33 +293,33 @@ public:
     }
 };
 
-template <typename T>
-using Node = typename BinaryTree<T>::Node;
+template <typename T, bool WithParent = false>
+using Node = typename BinaryTree<T, WithParent>::Node;
 
-template <typename T>
-using NodePtr = std::shared_ptr<Node<T>>;
+template <typename T, bool WithParent = false>
+using NodePtr = std::shared_ptr<Node<T, WithParent>>;
 
 #ifdef INCLUDE_HELPER
 
 // The function treeFromArray from the task 4.2 helps us to fill test trees.
-template <typename T>
-NodePtr<T> subtreeFromArray(const T *array, const NodePtr<T> &parent, int start, int end)
+template <typename T, bool WithParent = false>
+NodePtr<T, WithParent> subtreeFromArray(const T *array, const NodePtr<T, WithParent> &parent, int start, int end)
 {
     if (end < start)
         return nullptr;
 
     int i = (start + end) / 2;
-    auto node = std::make_shared<Node<T>>(array[i], parent);
-    node->setLeftChild(subtreeFromArray(array, node, start, i - 1));
-    node->setRightChild(subtreeFromArray(array, node, i + 1, end));
+    auto node = std::make_shared<Node<T, WithParent>>(array[i], parent);
+    node->setLeftChild(subtreeFromArray<T, WithParent>(array, node, start, i - 1));
+    node->setRightChild(subtreeFromArray<T, WithParent>(array, node, i + 1, end));
     return node;
 }
 
-template <typename T>
-BinaryTree<T> treeFromArray(const T *array, size_t size)
+template <typename T, bool WithParent = false>
+BinaryTree<T, WithParent> treeFromArray(const T *array, size_t size)
 {
-    BinaryTree<T> tree;
-    tree.setRoot(subtreeFromArray(array, nullptr, 0, size - 1));
+    BinaryTree<T, WithParent> tree;
+    tree.setRoot(subtreeFromArray<T, WithParent>(array, nullptr, 0, size - 1));
 
     return tree;
 }

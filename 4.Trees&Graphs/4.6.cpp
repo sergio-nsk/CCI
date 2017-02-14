@@ -6,7 +6,7 @@
 #include "tree.hpp"
 
 template <typename T>
-NodePtr<T> getMin(NodePtr<T> node)
+NodePtr<T, true> getMin(NodePtr<T, true> node)
 {
     if (!node)
         return nullptr;
@@ -16,7 +16,7 @@ NodePtr<T> getMin(NodePtr<T> node)
 }
 
 template <typename T>
-NodePtr<T> nextNode(NodePtr<T> node)
+NodePtr<T, true> nextNode(NodePtr<T, true> node)
 {
     if (!node)
         return nullptr;
@@ -36,7 +36,7 @@ int main()
 {
     // valid BST
     std::vector<int> array({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19});
-    auto tree = treeFromArray(&array[0], array.size());
+    auto tree = treeFromArray<int, true>(&array[0], array.size());
     tree.printTree(31);
     auto node = getMin<int>(tree.getRoot());
     while (node)
