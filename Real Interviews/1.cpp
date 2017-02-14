@@ -28,7 +28,6 @@ public:
         std::random_device randomDevice;
         randomEngine = std::mt19937(randomDevice());
         randomGenerator = std::uniform_real_distribution<float>(); // Let [0, 1) floats by default
-        std::uniform_real_distribution<> dis(1, 2);
     }
 
     // Fill max N complex numbers

@@ -31,7 +31,7 @@
     "version": "0.1.0",
     "command": "g++",
     "showOutput": "always",
-    "args": ["-g", "-std=c++14", "-I.", "-Wall", "-pedantic", "${file}", "-o", "${fileDirname}/a.out"],
+    "args": ["-g", "-std=c++14", "-I.", "-Wall", "-pedantic", "${file}", "-pthread", "-o", "${fileDirname}/a.out"],
     "problemMatcher": {
         "owner": "cpp",
         "fileLocation": ["absolute"],
