@@ -70,11 +70,9 @@ public:
     // Push received data to transmitter
     void push(const ComplexNumber *packet, size_t count)
     {
-        while (count > 0)
+        while (count-- > 0)
         {
-            outBuffer.push_back(*packet);
-            ++packet;
-            --count;
+            outBuffer.push_back(*packet++);
 
             if (outBuffer.size() == N)
             {
@@ -85,8 +83,9 @@ public:
     }
 
     // Wait until transmitter sends all data.
-    void wait()
+    size_t wait()
     {
+        auto left = outBuffer.size();
 #if 0
         // If not enough data left to fill buffer of N complex numbers, data is padded with (NaN, NaN).
         if (!outBuffer.empty())
@@ -96,14 +95,10 @@ public:
                 outBuffer.push_back({NaN, NaN});
             processFuture = send();
         }
-#else
-        if (!outBuffer.empty())
-        {
-            std::cerr << outBuffer.size() << " Complex numbers left pending" << std::endl;
-        }
 #endif
         if (processFuture.valid())
-            processFuture.wait();
+            processFuture.get();
+        return left;
     }
 
 private:
@@ -111,17 +106,15 @@ private:
     std::future<size_t> send()
     {
         // Do not hold push(), thus call process() asynchronously
-        auto out = std::make_shared<std::vector<ComplexNumber>>();
-        out->swap(outBuffer);
-        auto call = [](Processor process, std::shared_ptr<std::vector<ComplexNumber>> out, std::future<size_t> &&previousFuture)
+        std::vector<ComplexNumber> out;
+        out.swap(outBuffer);
+        auto call = [](Processor process, std::vector<ComplexNumber> &&out)
         {
-            if (previousFuture.valid())
-                previousFuture.wait();   // wait for previous process() finished
-            assert(out->size() == N);
-            process(&(*out)[0], N);
+            assert(out.size() == N);
+            process(&out[0], N);
             return N;
         };
-        return std::async(std::launch::async, call, process, out, std::move(processFuture));
+        return std::async(std::launch::async, call, process, std::move(out));
     }
 
     std::vector<ComplexNumber> outBuffer;
@@ -143,7 +136,7 @@ std::uniform_real_distribution<float> RundomGenerator::randomGenerator;
 // Sample process() operator. Counts sent complex numbers
 struct Processor
 {
-    Processor(size_t &c) : count(c)
+    Processor(std::atomic_size_t &c) : count(c)
     {
 
     }
@@ -154,7 +147,7 @@ struct Processor
     }
 
 private:
-    size_t &count;
+    std::atomic_size_t &count;
 };
 
 
@@ -163,7 +156,7 @@ int main()
     RundomGenerator::init();
 
     size_t ReceivedNumberCount = 0;
-    size_t SentNumberCount = 0;
+    std::atomic_size_t SentNumberCount;
     Processor processor(SentNumberCount);
 
     std::array<ComplexNumber, 1000> buffer;
@@ -176,8 +169,11 @@ int main()
         transmitter.push(buffer.data(), count);
     }
 
-    transmitter.wait();
+    auto &&left = transmitter.wait();
     std::cout << "Received " << ReceivedNumberCount << " complex numbers" << std::endl;
-    std::cout << "Transmitted " << SentNumberCount << " complex numbers" << std::endl;
+    std::cout << "Transmitted " << SentNumberCount << " complex numbers";
+    if (left > 0)
+        std::cout << ", " << left << " left pending";
+    std::cout << std::endl;
     return 0;
 }
