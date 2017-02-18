@@ -6,7 +6,7 @@
 #include <iostream>
 #include <iomanip>
 
-template <typename T, size_t N, bool WithParentRefs = false>
+template <typename T, size_t N, bool NodeWithParent = false>
 class Tree
 {
 private:
@@ -46,8 +46,7 @@ private:
     };
 
 public:
-
-    class Node : public NodeBase<Node, WithParentRefs>
+    class Node : public NodeBase<Node, NodeWithParent>
     {
     public:
         Node(T &&v) : value(std::move(v))
@@ -58,11 +57,11 @@ public:
         {
         }
 
-        Node(T &&v, const std::shared_ptr<Node> &p) : NodeBase<Node, WithParentRefs>(p), value(std::move(v))
+        Node(T &&v, const std::shared_ptr<Node> &p) : NodeBase<Node, NodeWithParent>(p), value(std::move(v))
         {
         }
 
-        Node(const T &v, const std::shared_ptr<Node> &p) : NodeBase<Node, WithParentRefs>(p), value(v)
+        Node(const T &v, const std::shared_ptr<Node> &p) : NodeBase<Node, NodeWithParent>(p), value(v)
         {
         }
 
@@ -136,6 +135,19 @@ public:
         return !root;
     }
 
+    class TreeIsEmptyException {};
+    
+protected:
+    std::shared_ptr<Node> root;
+};
+
+template <typename T, bool NodeWithParent = false>
+class BinaryTree : public Tree<T, 2, NodeWithParent>
+{
+public:
+    using Node = typename Tree<T, 2, NodeWithParent>::Node;
+
+private:
     template <typename Iterator, bool WithParent>
     class IteratorBase
     {
@@ -214,9 +226,10 @@ public:
         std::stack<std::shared_ptr<Node>> parents;
     };
 
-    class Iterator : public IteratorBase<Iterator, WithParentRefs>
+public:
+    class Iterator : public IteratorBase<Iterator, NodeWithParent>
     {
-        using Base = IteratorBase<Iterator, WithParentRefs>;
+        using Base = IteratorBase<Iterator, NodeWithParent>;
 
     public:
         Iterator()
@@ -245,27 +258,17 @@ public:
 
     Iterator begin()
     {
-        return Iterator(getRoot());
+        return Iterator(Tree<T, 2, NodeWithParent>::getRoot());
     }
 
-    class TreeIsEmptyException {};
-    
-protected:
-    std::shared_ptr<Node> root;
-};
-
-template <typename T, bool WithParent = false>
-class BinaryTree : public Tree<T, 2, WithParent>
-{
-public:
     void printTree(size_t size)
     {
-        using Node = typename Tree<T, 2, WithParent>::Node;
+        using Node = typename Tree<T, 2, NodeWithParent>::Node;
         const int w = 3; // width of a node and space between nodes
         int margin = size / 2;
         std::queue<std::shared_ptr<Node>> queue;
         std::queue<std::shared_ptr<Node>> childs;
-        queue.push(Tree<T, 2, WithParent>::root);
+        queue.push(Tree<T, 2, NodeWithParent>::root);
         std::cout << "Tree:" << std::endl;
 
         do 
