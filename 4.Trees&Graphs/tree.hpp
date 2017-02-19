@@ -5,6 +5,8 @@
 #include <stack>
 #include <iostream>
 #include <iomanip>
+#include <limits>
+#include <cmath>
 
 template <typename T, size_t N, bool NodeWithParent = false>
 class Tree
@@ -251,47 +253,71 @@ public:
         }
     };
 
-    Iterator end()
+    Iterator end() const
     {
         return Iterator();
     }
 
-    Iterator begin()
+    Iterator begin() const
     {
         return Iterator(Tree<T, 2, NodeWithParent>::getRoot());
     }
 
-    void printTree(size_t size)
+    size_t getDepth(T &minValue, T &maxValue, const std::shared_ptr<Node> &node) const
     {
-        using Node = typename Tree<T, 2, NodeWithParent>::Node;
-        const int w = 3; // width of a node and space between nodes
-        int margin = size / 2;
+        if (!node)
+            return 0;
+
+        auto depth = std::max(getDepth(minValue, maxValue, node->getLeft()), getDepth(minValue, maxValue, node->getRight())) + 1;
+        minValue = std::min(minValue, node->getValue());
+        maxValue = std::max(maxValue, node->getValue());
+        return depth;
+    }
+
+    void printTree() const
+    {
+        T minValue = std::numeric_limits<T>::max(), maxValue = std::numeric_limits<T>::min();
+        size_t depth = getDepth(minValue, maxValue, Tree<T, 2, NodeWithParent>::getRoot());
+
+        // bottommost max leaf count
+        size_t size = std::pow(2, depth - 1);
+
+        // width of node, in digits
+        size_t digits = (maxValue != 0 || minValue != 0) ? std::log10(std::max(maxValue, std::abs(minValue))) + 1  : 1;
+        if (minValue < 0)
+            ++digits;
+
+        // placeholder width
+        const size_t w = digits + 1;
+        
         std::queue<std::shared_ptr<Node>> queue;
         std::queue<std::shared_ptr<Node>> childs;
         queue.push(Tree<T, 2, NodeWithParent>::root);
+        std::cout.imbue(std::locale("en_US.utf8"));
         std::cout << "Tree:" << std::endl;
-
         do 
         {
-            std::cout << std::string(margin * w, ' ');
+            size_t space = (size - 1) * w + 1;
+            int margin = space / 2;
+            std::cout << std::string(margin, ' ');
             while (!queue.empty())
             {
                 if (!queue.front())
-                    std::cout << std::string(2 * (margin  + 1)* w, ' ');
+                    std::cout << std::string(w, ' ');
                 else
                 {
-                    std::cout << std::setw(3) << queue.front()->getValue() << std::string((2 * margin + 1) * w, ' ');
+                    std::cout << std::setw(digits) << std::right
+                        << queue.front()->getValue() << std::string(space, ' ');
                     childs.push(queue.front()->getLeft());
                     childs.push(queue.front()->getRight());
                 }
                 queue.pop();
-
             }
             std::cout << std::endl;
             queue.swap(childs);
             if (margin == 0)
                 break;
-            margin = (margin - 1) / 2;
+            size /= 2;
         } while (true);
     }
 };

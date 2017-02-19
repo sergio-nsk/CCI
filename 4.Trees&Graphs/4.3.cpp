@@ -64,51 +64,51 @@ int main()
 {
     auto tree = treeFromArray({0});
     auto nodes = getNodes(tree);
-    tree.printTree(1);
+    tree.printTree();
     printNodes<int>(nodes);
 
     tree = treeFromArray({0, 1});
-    tree.printTree(3);
+    tree.printTree();
     nodes = getNodes(tree);
     printNodes<int>(nodes);
 
     tree = treeFromArray({0, 1, 2});
-    tree.printTree(3);
+    tree.printTree();
     nodes = getNodes(tree);
     printNodes<int>(nodes);
 
     tree = treeFromArray({0, 1, 2, 3});
-    tree.printTree(7);
+    tree.printTree();
     nodes = getNodes(tree);
     printNodes<int>(nodes);
 
     tree = treeFromArray({0, 1, 2, 3, 4});
-    tree.printTree(7);
+    tree.printTree();
     nodes = getNodes(tree);
     printNodes<int>(nodes);
 
     tree = treeFromArray({0, 1, 2, 3, 4, 5});
-    tree.printTree(7);
+    tree.printTree();
     nodes = getNodes(tree);
     printNodes<int>(nodes);
 
     tree = treeFromArray({0, 1, 2, 3, 4, 5, 6});
-    tree.printTree(7);
+    tree.printTree();
     nodes = getNodes(tree);
     printNodes<int>(nodes);
 
     tree = treeFromArray({0, 1, 2, 3, 4, 5, 6, 7});
-    tree.printTree(15);
+    tree.printTree();
     nodes = getNodes(tree);
     printNodes<int>(nodes);
 
     tree = treeFromArray({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14});
-    tree.printTree(15);
+    tree.printTree();
     nodes = getNodes(tree);
     printNodes<int>(nodes);
 
     tree = treeFromArray( {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19});
-    tree.printTree(31);
+    tree.printTree();
     nodes = getNodes(tree);
     printNodes<int>(nodes);
     return 0;

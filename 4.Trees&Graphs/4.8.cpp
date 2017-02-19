@@ -56,7 +56,7 @@ int main()
 {
     std::vector<int> array();
     auto tree = treeFromArray({10, 1, 12, 3, 14, 25, 16, 27, 18, 29, 10, 13, 2, 15, 4, 5, 17, 7, 19, 9});
-    tree.printTree(31);
+    tree.printTree();
 
     for (auto one : tree)
         for (auto two : tree)
