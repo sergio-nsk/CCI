@@ -54,8 +54,8 @@ NodePtr<T> findCommonAncestor(const BinaryTree<T> &tree, const NodePtr<T> &one, 
 
 int main()
 {
-    std::vector<int> array({10, 1, 12, 3, 14, 5, 16, 7, 18, 9, 10, 13, 2, 15, 4, 5, 17, 7, 19, 9});
-    auto tree = treeFromArray(&array[0], array.size());
+    std::vector<int> array();
+    auto tree = treeFromArray({10, 1, 12, 3, 14, 25, 16, 27, 18, 29, 10, 13, 2, 15, 4, 5, 17, 7, 19, 9});
     tree.printTree(31);
 
     for (auto one : tree)

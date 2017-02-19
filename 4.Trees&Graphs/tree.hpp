@@ -319,10 +319,10 @@ NodePtr<T, WithParent> subtreeFromArray(const T *array, const NodePtr<T, WithPar
 }
 
 template <typename T, bool WithParent = false>
-BinaryTree<T, WithParent> treeFromArray(const T *array, size_t size)
+BinaryTree<T, WithParent> treeFromArray(std::initializer_list<T> array)
 {
     BinaryTree<T, WithParent> tree;
-    tree.setRoot(subtreeFromArray<T, WithParent>(array, nullptr, 0, size - 1));
+    tree.setRoot(subtreeFromArray<T, WithParent>(array.begin(), nullptr, 0, array.size() - 1));
 
     return tree;
 }

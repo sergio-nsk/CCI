@@ -57,54 +57,57 @@ void printNodes(const std::list<NodeList<T>> &nodes)
         std::cout << std::endl;
         ++depth;
     }
+    std::cout << std::endl;
 }
 
 int main()
 {
-    std::vector<int> array({0});
-    auto tree = treeFromArray(&array[0], array.size());
+    auto tree = treeFromArray({0});
     auto nodes = getNodes(tree);
-    // printTree(tree, 1);
-    // printNodes<int>(nodes);
+    tree.printTree(1);
+    printNodes<int>(nodes);
 
-    array = {0, 1};
-    tree = treeFromArray(&array[0], array.size());
+    tree = treeFromArray({0, 1});
     tree.printTree(3);
     nodes = getNodes(tree);
     printNodes<int>(nodes);
 
-    array = {0, 1, 2};
-    tree = treeFromArray(&array[0], array.size());
-    // printTree(tree, 3);
+    tree = treeFromArray({0, 1, 2});
+    tree.printTree(3);
+    nodes = getNodes(tree);
+    printNodes<int>(nodes);
 
-    array = {0, 1, 2, 3};
-    tree = treeFromArray(&array[0], array.size());
-    // printTree(tree, 7);
-
-    array = {0, 1, 2, 3, 4};
-    tree = treeFromArray(&array[0], array.size());
-    // printTree(tree, 7);
-
-    array = {0, 1, 2, 3, 4, 5};
-    tree = treeFromArray(&array[0], array.size());
-    // printTree(tree, 7);
-
-    array = {0, 1, 2, 3, 4, 5, 6};
-    tree = treeFromArray(&array[0], array.size());
+    tree = treeFromArray({0, 1, 2, 3});
     tree.printTree(7);
     nodes = getNodes(tree);
     printNodes<int>(nodes);
 
-    array = {0, 1, 2, 3, 4, 5, 6, 7};
-    tree = treeFromArray(&array[0], array.size());
-    // printTree(tree, 15);
+    tree = treeFromArray({0, 1, 2, 3, 4});
+    tree.printTree(7);
+    nodes = getNodes(tree);
+    printNodes<int>(nodes);
 
-    array = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
-    tree = treeFromArray(&array[0], array.size());
-    // printTree(tree, 15);
+    tree = treeFromArray({0, 1, 2, 3, 4, 5});
+    tree.printTree(7);
+    nodes = getNodes(tree);
+    printNodes<int>(nodes);
 
-    array = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19};
-    tree = treeFromArray(&array[0], array.size());
+    tree = treeFromArray({0, 1, 2, 3, 4, 5, 6});
+    tree.printTree(7);
+    nodes = getNodes(tree);
+    printNodes<int>(nodes);
+
+    tree = treeFromArray({0, 1, 2, 3, 4, 5, 6, 7});
+    tree.printTree(15);
+    nodes = getNodes(tree);
+    printNodes<int>(nodes);
+
+    tree = treeFromArray({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14});
+    tree.printTree(15);
+    nodes = getNodes(tree);
+    printNodes<int>(nodes);
+
+    tree = treeFromArray( {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19});
     tree.printTree(31);
     nodes = getNodes(tree);
     printNodes<int>(nodes);

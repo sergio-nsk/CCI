@@ -35,8 +35,7 @@ NodePtr<T, true> nextNode(NodePtr<T, true> node)
 int main()
 {
     // valid BST
-    std::vector<int> array({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19});
-    auto tree = treeFromArray<int, true>(&array[0], array.size());
+    auto tree = treeFromArray<int, true>({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19});
     tree.printTree(31);
     auto node = getMin<int>(tree.getRoot());
     while (node)
