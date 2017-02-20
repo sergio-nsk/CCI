@@ -8,7 +8,7 @@
 #include <limits>
 #include <cmath>
 
-template <typename T, size_t N, bool NodeWithParent = false>
+template <typename T, bool NodeWithParent = false>
 class Tree
 {
 private:
@@ -16,9 +16,7 @@ private:
     class NodeBase
     {
     public:
-        NodeBase()
-        {
-        }
+        NodeBase() = default;
 
         NodeBase(const std::shared_ptr<Node> &p) : parent(p)
         {
@@ -36,9 +34,7 @@ private:
     class NodeBase<Node, false>
     {
     public:
-        NodeBase()
-        {
-        }
+        NodeBase() = default;
 
         NodeBase(const std::shared_ptr<Node> &p)
         {
@@ -67,56 +63,46 @@ public:
         {
         }
 
-        const T& getValue() const
+        const T &getValue() const
         {
             return value;
         }
 
-        const std::array<std::shared_ptr<Node>, N> &getChilds() const
-        {
-            return childs;
-        }
-
-        std::array<std::shared_ptr<Node>, N> &getChilds()
-        {
-            return childs;
-        }
-
         const std::shared_ptr<Node> &getLeft() const
         {
-            return childs[0];
+            return childs.first;
         }
 
         std::shared_ptr<Node> &getLeft()
         {
-            return childs[0];
+            return childs.first;
         }
 
         const std::shared_ptr<Node> &getRight() const
         {
-            return childs[childs.size() - 1];
+            return childs.first;
         }
 
         std::shared_ptr<Node> &getRight()
         {
-            return childs[childs.size() - 1];
+            return childs.second;
         }
 
         template <typename U>
         void setLeftChild(U &&node)
         {
-            childs[0] = std::forward<U>(node);
+            childs.first = std::forward<U>(node);
         }
 
         template <typename U>
         void setRightChild(U &&node)
         {
-            childs[childs.size() - 1] = std::forward<U>(node);
+            childs.second = std::forward<U>(node);
         }
 
     protected:
         T value;
-        std::array<std::shared_ptr<Node>, N> childs;
+        std::pair<std::shared_ptr<Node>, std::shared_ptr<Node>> childs;
     };
 
     const std::shared_ptr<Node> &getRoot() const
@@ -137,26 +123,12 @@ public:
         return !root;
     }
 
-    class TreeIsEmptyException {};
-    
-protected:
-    std::shared_ptr<Node> root;
-};
-
-template <typename T, bool NodeWithParent = false>
-class BinaryTree : public Tree<T, 2, NodeWithParent>
-{
-public:
-    using Node = typename Tree<T, 2, NodeWithParent>::Node;
-
 private:
     template <typename Iterator, bool WithParent>
     class IteratorBase
     {
     public:
-        IteratorBase()
-        {
-        }
+        IteratorBase() = default;
         
         IteratorBase(const std::shared_ptr<Node> &node) : currNode(node)
         {
@@ -188,9 +160,7 @@ private:
     class IteratorBase<Iterator, false>
     {
     public:
-        IteratorBase()
-        {
-        }
+        IteratorBase() = default;
         
         IteratorBase(const std::shared_ptr<Node> &node) : currNode(node)
         {
@@ -234,9 +204,7 @@ public:
         using Base = IteratorBase<Iterator, NodeWithParent>;
 
     public:
-        Iterator()
-        {
-        }
+        Iterator() = default;
 
         Iterator(const std::shared_ptr<Node> &node) : Base(node)
         {
@@ -260,9 +228,10 @@ public:
 
     Iterator begin() const
     {
-        return Iterator(Tree<T, 2, NodeWithParent>::getRoot());
+        return Iterator(Tree<T, NodeWithParent>::getRoot());
     }
 
+private:
     size_t getDepth(T &minValue, T &maxValue, const std::shared_ptr<Node> &node) const
     {
         if (!node)
@@ -274,10 +243,11 @@ public:
         return depth;
     }
 
+public:
     void printTree() const
     {
         T minValue = std::numeric_limits<T>::max(), maxValue = std::numeric_limits<T>::min();
-        size_t depth = getDepth(minValue, maxValue, Tree<T, 2, NodeWithParent>::getRoot());
+        size_t depth = getDepth(minValue, maxValue, Tree<T, NodeWithParent>::getRoot());
 
         // bottommost max leaf count
         size_t size = std::pow(2, depth - 1);
@@ -287,27 +257,27 @@ public:
         if (minValue < 0)
             ++digits;
 
-        // placeholder width
-        const size_t w = digits + 1;
+        const std::string placeholder(digits + 1, ' ');
         
         std::queue<std::shared_ptr<Node>> queue;
         std::queue<std::shared_ptr<Node>> childs;
-        queue.push(Tree<T, 2, NodeWithParent>::root);
-        std::cout.imbue(std::locale("en_US.utf8"));
+        queue.push(Tree<T, NodeWithParent>::root);
         std::cout << "Tree:" << std::endl;
+
         do 
         {
-            size_t space = (size - 1) * w + 1;
-            int margin = space / 2;
-            std::cout << std::string(margin, ' ');
+            // space between nodes
+            std::string space((size - 1) * placeholder.length() + 1, ' ');
+
+            // margin
+            std::cout << std::string(space.length() / 2, ' ');;
             while (!queue.empty())
             {
                 if (!queue.front())
-                    std::cout << std::string(w, ' ');
+                    std::cout << placeholder;
                 else
                 {
-                    std::cout << std::setw(digits) << std::right
-                        << queue.front()->getValue() << std::string(space, ' ');
+                    std::cout << std::setw(digits) << std::right << queue.front()->getValue() << space;
                     childs.push(queue.front()->getLeft());
                     childs.push(queue.front()->getRight());
                 }
@@ -315,15 +285,18 @@ public:
             }
             std::cout << std::endl;
             queue.swap(childs);
-            if (margin == 0)
-                break;
             size /= 2;
-        } while (true);
+        } while (size > 0);
     }
+
+    class TreeIsEmptyException {};
+    
+protected:
+    std::shared_ptr<Node> root;
 };
 
 template <typename T, bool WithParent = false>
-using Node = typename BinaryTree<T, WithParent>::Node;
+using Node = typename Tree<T, WithParent>::Node;
 
 template <typename T, bool WithParent = false>
 using NodePtr = std::shared_ptr<Node<T, WithParent>>;
@@ -345,9 +318,9 @@ NodePtr<T, WithParent> subtreeFromArray(const T *array, const NodePtr<T, WithPar
 }
 
 template <typename T, bool WithParent = false>
-BinaryTree<T, WithParent> treeFromArray(std::initializer_list<T> array)
+Tree<T, WithParent> treeFromArray(std::initializer_list<T> array)
 {
-    BinaryTree<T, WithParent> tree;
+    Tree<T, WithParent> tree;
     tree.setRoot(subtreeFromArray<T, WithParent>(array.begin(), nullptr, 0, array.size() - 1));
 
     return tree;

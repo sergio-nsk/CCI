@@ -29,7 +29,7 @@ FindResult findNodeFrom(const NodePtr<T> &startNode, const NodePtr<T> &node)
 }
 
 template <typename T>
-NodePtr<T> findCommonAncestor(const BinaryTree<T> &tree, const NodePtr<T> &one, const NodePtr<T> &two)
+NodePtr<T> findCommonAncestor(const Tree<T> &tree, const NodePtr<T> &one, const NodePtr<T> &two)
 {
     if (one == two)
         return one;

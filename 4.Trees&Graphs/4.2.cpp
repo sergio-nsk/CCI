@@ -18,9 +18,9 @@ NodePtr<T> subtreeFromArray(const T *array, int start, int end)
 }
 
 template <typename T>
-BinaryTree<T> treeFromArray(const T *array, size_t size)
+Tree<T> treeFromArray(const T *array, size_t size)
 {
-    BinaryTree<T> tree;
+    Tree<T> tree;
     tree.setRoot(subtreeFromArray(array, 0, size - 1));
 
     return tree;

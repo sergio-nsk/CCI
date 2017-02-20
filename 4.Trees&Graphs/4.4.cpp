@@ -7,12 +7,6 @@
 #define INCLUDE_HELPER
 #include "tree.hpp"
 
-template <typename T, size_t N>
-using NodeN = typename Tree<T, N>::Node;
-
-template <typename T, size_t N>
-using NodeNPtr = std::shared_ptr<NodeN<T, N>>;
-
 bool checkHeight(size_t height, size_t &minHeight, size_t &maxHeight)
 {
     if (height < minHeight)
@@ -24,36 +18,29 @@ bool checkHeight(size_t height, size_t &minHeight, size_t &maxHeight)
     return true;
 }
 
-template <typename T, size_t N>
-bool walkTree(const NodeNPtr<T, N> &node, int height, size_t &minHeight, size_t &maxHeight)
+template <typename T>
+int getHeight(const NodePtr<int> &node)
 {
-    if (node->getChilds().empty()) // leaf
-    {
-        if (!checkHeight(height, minHeight, maxHeight))
-            return false;
-    }
+    if (!node)
+        return 0;
 
-    for (const auto &c : node->getChilds())
-    {
-        if (c)
-        {
-            if (!walkTree<T, N>(c, height + 1, minHeight, maxHeight))
-                return false;
-        }
-        else if (!checkHeight(height, minHeight, maxHeight))
-        {
-            return false;
-        }
-    }
-    return true;
+    int leftH = getHeight<T>(node->getLeft());
+    if (leftH == -1)
+        return -1;
+
+    int rightH = getHeight<T>(node->getRight());
+    if (rightH == -1)
+        return -1;
+    
+    if (std::abs(leftH - rightH) > 1)
+        return -1;
+    return std::max(leftH, rightH) + 1;
 }
 
-template <typename T, size_t N>
-bool isTreeBalanced(const Tree<T, N> &tree)
+template <typename T>
+bool isTreeBalanced(const Tree<T> &tree)
 {
-    size_t minHeight = std::numeric_limits<size_t>::max();
-    size_t maxHeight = 0;
-    return walkTree<T, N>(tree.getRoot(), 0, minHeight, maxHeight);
+    return getHeight<T>(tree.getRoot()) != -1;
 }
 
 int main()
@@ -62,7 +49,7 @@ int main()
     std::cout << "Tree is " << (isTreeBalanced<int>(tree) ? "" : "NOT ") << "balanced" << std::endl;
 
     auto r = tree.getRoot()->getRight();
-    tree.getRoot()->getRight() = std::make_shared<NodeN<int, 2>>(100); // not balanced
+    tree.getRoot()->getRight() = std::make_shared<Node<int>>(100); // not balanced
     std::cout << "Tree is " << (isTreeBalanced<int>(tree) ? "" : "NOT ") << "balanced" << std::endl;
 
     tree.getRoot()->getRight() = r; // balanced

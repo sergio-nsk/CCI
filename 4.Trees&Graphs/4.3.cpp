@@ -11,7 +11,7 @@ template <typename T>
 using NodeList = std::list<NodePtr<T>>;
 
 template <typename T>
-std::list<NodeList<T>> getNodes(const BinaryTree<T> &tree)
+std::list<NodeList<T>> getNodes(const Tree<T> &tree)
 {
     std::list<NodeList<T>> result;
 

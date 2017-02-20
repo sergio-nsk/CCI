@@ -18,7 +18,7 @@ bool checkNode(const NodePtr<T> &node, const T *minValue, const T *maxValue)
 }
 
 template <typename T>
-bool isValidBST(const BinaryTree<T> &tree)
+bool isValidBST(const Tree<T> &tree)
 {
     return checkNode<T>(tree.getRoot(), nullptr, nullptr);
 }
