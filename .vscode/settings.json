@@ -3,5 +3,10 @@
     "code-runner.executorMap": {
         "cpp": "cd $dir && g++ -std=c++14 -Wall -I. -g -pthread $fullFileName && ./a.out"
     },
-    "files.associations": {"*.cpp" : "cpp"}
+    "files.associations": {"*.cpp" : "cpp"},
+    "python.linting.pylintArgs": [
+        "--function-rgx=[a-z_][a-zA-Z0-9_]{2,30}$",
+        "--module-rgx=",
+        "--variable-rgx=[a-z_][a-zA-Z0-9_]{,30}$"
+    ]
 }
