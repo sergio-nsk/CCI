@@ -8,5 +8,6 @@
         "--function-rgx=[a-z_][a-zA-Z0-9_]{2,30}$",
         "--module-rgx=",
         "--variable-rgx=[a-z_][a-zA-Z0-9_]{,30}$"
-    ]
+    ],
+    "clang.cxxflags": ["-std=c++14"]
 }
