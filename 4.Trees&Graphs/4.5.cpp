@@ -39,5 +39,4 @@ int main()
     tree.getRoot()->getRight()->getRight()->getRight()->setLeftChild(std::make_shared<Node<int>>(15));
     TestUtils::printTree(tree);
     std::cout << "The tree is " << (isValidBST<int>(tree) ? "" : "NOT ") << "binary search tree" << std::endl;
-    return 0;
 }

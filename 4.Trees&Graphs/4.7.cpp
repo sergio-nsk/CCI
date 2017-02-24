@@ -12,8 +12,9 @@
 #include <iostream>
 
 #include "graph.hpp"
+#include "graphtestutils.hpp"
 
-std::list<Node<int>> buildOrder(Graph<int> &graph)
+std::list<Node<int>> buildOrder(const Graph<int> &graph)
 {
     std::list<Node<int>> order;
     auto &projects = graph.getNodes();
@@ -42,43 +43,25 @@ std::list<Node<int>> buildOrder(Graph<int> &graph)
     return order;
 }
 
-Graph<int> createGraph(const std::initializer_list<std::string> &projects,
-                       const std::initializer_list<std::array<const std::string, 2>> &deps)
+
+void test(const Graph<int> &graph)
 {
-    Graph<int> graph;
-    for (auto &n : projects)
-        graph.addNode(n);
-    for (auto &d : deps)
-        graph[d[0]]->addChild(graph[d[1]]);
-    return graph;
+    auto order = buildOrder(graph);
+
+    const char *sep = "";
+    for (auto &n : order)
+    {
+        std::cout << sep << n->Name();
+        sep = ", ";
+    }
+    std::cout << std::endl;
 }
 
 int main()
 {
-    Graph<int> graph = createGraph({"a", "b", "c", "d", "e", "f"},
-        {{"a", "d"}, {"f", "b"}, {"b", "d"}, {"f", "a"}, {"d", "c"}});
-    auto order = buildOrder(graph);
+    test(TestUtils::createGraph<int>({"a", "b", "c", "d", "e", "f"},
+        {{"a", "d"}, {"f", "b"}, {"b", "d"}, {"f", "a"}, {"d", "c"}}));
 
-    const char *sep = "";
-
-    for (auto &n : order)
-    {
-        std::cout << sep << n->Name();
-        sep = ", ";
-    }
-    std::cout << std::endl;
-
-    graph = createGraph({"a", "b", "c", "d", "e", "f", "g"},
-        {{"a", "e"}, {"b", "a"}, {"b", "e"}, {"c", "a"}, {"d", "g"}, {"f", "a"}, {"f", "b"}, {"f", "c"}});
-    order = buildOrder(graph);
-
-    sep = "";
-
-    for (auto &n : order)
-    {
-        std::cout << sep << n->Name();
-        sep = ", ";
-    }
-    std::cout << std::endl;
-    return 0;
+    test(TestUtils::createGraph<int>({"a", "b", "c", "d", "e", "f", "g"},
+        {{"a", "e"}, {"b", "a"}, {"b", "e"}, {"c", "a"}, {"d", "g"}, {"f", "a"}, {"f", "b"}, {"f", "c"}}));
 }

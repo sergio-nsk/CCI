@@ -3,8 +3,9 @@
 // necessarily a binary search tree.
 
 #include <vector>
-#define INCLUDE_HELPER
 #include "tree.hpp"
+#include "treetestutils.hpp"
+#include "treenodeiterator.hpp"
 
 enum FindResult
 {
@@ -55,46 +56,20 @@ NodePtr<T> findCommonAncestor(const Tree<T> &tree, const NodePtr<T> &one, const 
 int main()
 {
     std::vector<int> array();
-    auto tree = treeFromArray({10, 1, 12, 3, 14, 25, 16, 27, 18, 29, 10, 13, 2, 15, 4, 5, 17, 7, 19, 9});
-    tree.printTree();
+    auto tree = TestUtils::treeFromArray({10, 1, 12, 3, 14, 25, 16, 27, 18, 29, 10, 13, 2, 15, 4, 5, 17, 7, 19, 9});
+    TestUtils::printTree(tree);
 
     for (auto one : tree)
+    {
+        if (one == tree.getRoot())
+            continue; // it is not interesting
         for (auto two : tree)
         {
+            if (two == tree.getRoot() || two == one)
+                continue; // it is not interesting
             auto ancestor = findCommonAncestor<int>(tree, one, two);
             std::cout << one->getValue() << ", " << two->getValue() << " <-- ";
             std::cout << (ancestor ? std::to_string(ancestor->getValue()) : "NOT FOUND") << std::endl;
         }
-
-    // auto one = tree.getRoot();
-    // auto two = tree.getRoot();
-    // auto ancestor = findCommonAncestor<int>(tree, one, two);
-    // std::cout << one->getValue() << ", " << two->getValue() << " <-- ";
-    // std::cout << (ancestor ? std::to_string(ancestor->getValue()) : "NOT FOUND") << std::endl;
-
-    // one = tree.getRoot()->getLeft();
-    // two = tree.getRoot();
-    // ancestor = findCommonAncestor<int>(tree, one, two);
-    // std::cout << one->getValue() << ", " << two->getValue() << " <-- ";
-    // std::cout << (ancestor ? std::to_string(ancestor->getValue()) : "NOT FOUND") << std::endl;
-
-    // one = tree.getRoot();
-    // two = tree.getRoot()->getLeft();
-    // ancestor = findCommonAncestor<int>(tree, one, two);
-    // std::cout << one->getValue() << ", " << two->getValue() << " <-- ";
-    // std::cout << (ancestor ? std::to_string(ancestor->getValue()) : "NOT FOUND") << std::endl;
-
-    // one = tree.getRoot()->getLeft();
-    // two = tree.getRoot()->getRight();
-    // ancestor = findCommonAncestor<int>(tree, one, two);
-    // std::cout << one->getValue() << ", " << two->getValue() << " <-- ";
-    // std::cout << (ancestor ? std::to_string(ancestor->getValue()) : "NOT FOUND") << std::endl;
-
-    // one = tree.getRoot()->getRight();
-    // two = tree.getRoot()->getRight();
-    // ancestor = findCommonAncestor<int>(tree, one, two);
-    // std::cout << one->getValue() << ", " << two->getValue() << " <-- ";
-    // std::cout << (ancestor ? std::to_string(ancestor->getValue()) : "NOT FOUND") << std::endl;
-
-    return 0;
+    }
 }
