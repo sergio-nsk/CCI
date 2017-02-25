@@ -30,7 +30,7 @@ public:
                 node = node->getParent();
             currNode = node->getParent() ? node->getParent()->getRight() : node->getParent();
         }
-        return *this;
+        return *static_cast<Iterator *>(this);
     }
 
 protected:

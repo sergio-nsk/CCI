@@ -55,7 +55,6 @@ NodePtr<T> findCommonAncestor(const Tree<T> &tree, const NodePtr<T> &one, const 
 
 int main()
 {
-    std::vector<int> array();
     auto tree = TestUtils::treeFromArray({10, 1, 12, 3, 14, 25, 16, 27, 18, 29, 10, 13, 2, 15, 4, 5, 17, 7, 19, 9});
     TestUtils::printTree(tree);
 
@@ -72,4 +71,13 @@ int main()
             std::cout << (ancestor ? std::to_string(ancestor->getValue()) : "NOT FOUND") << std::endl;
         }
     }
+
+    // Test nodes of different trees
+    auto tree2 = TestUtils::getSampleTree<int>(7);
+    auto node1 = tree.getRoot()->getLeft()->getRight();
+    auto node2 = tree2.getRoot()->getRight()->getLeft();
+    auto ancestor = findCommonAncestor<int>(tree, node1, node2);
+    std::cout << "Nodes below are of diffent trees:\n";
+    std::cout << node1->getValue() << ", " << node2->getValue() << " <-- ";
+    std::cout << (ancestor ? std::to_string(ancestor->getValue()) : "NOT FOUND") << std::endl;
 }
