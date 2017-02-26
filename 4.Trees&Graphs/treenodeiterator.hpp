@@ -109,13 +109,13 @@ template <typename T, bool NodeWithParent>
 class Tree;
 
 template <typename T, bool NodeWithParent>
-auto begin(Tree<T, NodeWithParent> &tree)
+auto begin(const Tree<T, NodeWithParent> &tree)
 {
     return Iterator<T, NodeWithParent>(tree.getRoot());
 }
 
 template <typename T, bool NodeWithParent>
-auto end(Tree<T, NodeWithParent>)
+auto end(const Tree<T, NodeWithParent>)
 {
     return Iterator<T, NodeWithParent>();
 }
