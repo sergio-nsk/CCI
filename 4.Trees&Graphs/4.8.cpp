@@ -2,6 +2,10 @@
 // of two nodes in a binary tree. Avoid storing additional nodes in a data structure. NOTE: This is not
 // necessarily a binary search tree.
 
+// My solution is faster than one from the book. commonAncestor() or commonAncHelper() function from
+// the there always recursively traverse subtrees till leafs, but my solutions does it twice rarer.
+// In O-notation speeds are the same.
+
 #include <vector>
 #include "tree.hpp"
 #include "treetestutils.hpp"
@@ -9,10 +13,10 @@
 
 enum FindResult
 {
-    NotFound,
-    FoundLeft,
-    FoundRight,
-    FoundEqual
+    NotFound,   // node not found in subtree
+    FoundLeft,  // node not found in left subtree
+    FoundRight, // node not found in right subtree
+    FoundEqual  // node is subtree root
 };
 
 template <typename T>
