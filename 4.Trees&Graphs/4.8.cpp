@@ -3,7 +3,7 @@
 // necessarily a binary search tree.
 
 // My solution is faster than one from the book. commonAncestor() or commonAncHelper() function from
-// the there always recursively traverse subtrees till leafs, but my solutions does it twice rarer.
+// the book always recursively traverse subtrees till leafs, but my solutions does it twice rarer.
 // In O-notation speeds are the same.
 
 #include <vector>
