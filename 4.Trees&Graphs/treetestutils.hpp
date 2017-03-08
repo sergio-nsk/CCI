@@ -46,7 +46,7 @@ namespace TestUtils
         if (minValue < 0)
             ++digits;
 
-        const std::string placeholder(digits + 1, ' ');
+        const std::string placeholder(digits, ' ');
         
         std::queue<NodePtr> queue;
         std::queue<NodePtr> childs;
@@ -56,14 +56,18 @@ namespace TestUtils
         do 
         {
             // space between nodes
-            std::string space((size - 1) * placeholder.length() + 1, ' ');
+            std::string space((size - 1) * (placeholder.length() + 1) + 1, ' ');
 
             // margin
             std::cout << std::string(space.length() / 2, ' ');;
             while (!queue.empty())
             {
                 if (!queue.front())
-                    std::cout << placeholder;
+                {
+                    std::cout << placeholder << space;
+                    childs.emplace();
+                    childs.emplace();
+                }
                 else
                 {
                     std::cout << std::setw(digits) << std::right << queue.front()->getValue() << space;
