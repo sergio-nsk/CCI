@@ -5,8 +5,8 @@
 
 // Tree contains all nodes in a deque. It needs to handle insert() and delete() methods.
 // getRundomNode: O(1) time
-// To fill tree: + O(N) time + O(N) memory.
-// To clean tree: + O(N) time
+// To fill tree with deque additional: + O(N) time + O(N) memory.
+// To clean tree with deque additional: + O(N) time
 
 #include <memory>
 #include <deque>
