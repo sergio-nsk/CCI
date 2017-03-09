@@ -42,11 +42,6 @@ public:
         return value;
     }
 
-    size_t getSize() const
-    {
-        return size;
-    }
-
     void add(const T &v)
     {
         if (!childs[v > value])
@@ -56,18 +51,22 @@ public:
         ++size;
     }
 
-    const T &getRandom()
+    const T &getRandom() const
     {
-        size_t n = std::rand() % size;
-        if (n == size - 1)
-            return value;
-        else if (childs[0] && n < childs[0]->getSize())
-            return childs[0]->getRandom();
-        else
-            return childs[1]->getRandom();
+        return get(std::rand() % size + 1);
     }
 
 private:
+    const T &get(size_t n) const
+    {
+        if (n == size)
+            return value;
+        else if (childs[0] && n <= childs[0]->size)
+            return childs[0]->get(n);
+        else
+            return childs[1]->get(n - (childs[0] ? childs[0]->size : 0));
+    }
+
     T value;
     size_t size;
     std::array<NodePtr, 2> childs;
@@ -88,11 +87,16 @@ int main()
     Tree<int, false, RandomNode> tree;
     tree.setRoot(root);
     TestUtils::printTree(tree);
+    std::cout << std::endl;
 
-    const char *sep = "";
-    for (auto i = 0U; i < 100; ++i)
-    {
-        std::cout << sep << root->getRandom();
-        sep = ", ";
-    }
+    // Check distribution of rundom tree nodes
+    v = std::vector<int>(v.size() + 1, 0);
+    for (auto i = 0U; i < v.size() * 1000; ++i)
+        ++v[root->getRandom()];
+
+    size_t cnt = std::accumulate(v.begin(), v.end(), 0);
+    std::cout << "Total: " << cnt << " times\n";
+    std::cout << std::fixed << std::setprecision(2);
+    for (auto i = 0U; i < v.size(); ++i)
+        std::cout << i << ": " << 100.0 * v[i] / cnt << "%\n";
 }
