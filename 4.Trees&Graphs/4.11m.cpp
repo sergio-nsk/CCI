@@ -26,7 +26,7 @@ public:
     {
         value = v;
     }
-    
+
     const NodePtr &getLeft() const
     {
         return childs[0];

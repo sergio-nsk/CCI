@@ -100,7 +100,7 @@ int main()
     Tree<int> tree;
     auto node = tree.insert(nullptr, 3, false); //      3
     auto left = tree.insert(node, 1, false);    //    /   \       .
-    tree.insert(left, 0, false);                //   1     5 
+    tree.insert(left, 0, false);                //   1     5
     tree.insert(left, 2, true);                 //  / \   / \     .
     auto right = tree.insert(node, 5, true);    // 0   2 4   6
     tree.insert(right, 4, false);
