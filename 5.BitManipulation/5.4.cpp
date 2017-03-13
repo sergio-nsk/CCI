@@ -8,7 +8,7 @@
 template <typename T>
 std::tuple<T, T> nextBiggerSmaller(T v)
 {
-    static_assert(std::is_unsigned<T>::value, "T must be unsigned type");
+    static_assert(std::is_unsigned<T>::value, "T must be unsigned integral type");
 
     auto result = std::make_tuple(0U, 0U);
     T rightZeros = 0; // tail zero count

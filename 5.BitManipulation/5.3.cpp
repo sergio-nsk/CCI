@@ -15,7 +15,7 @@
 template <typename T>
 int flipToWin(T bits)
 {
-    static_assert(std::is_unsigned<T>::value, "Unsigned type required for T");
+    static_assert(std::is_unsigned<T>::value, "T must be unsigned integral type");
 
     int result = 1;
     int lenLeft = 0;

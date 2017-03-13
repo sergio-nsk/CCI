@@ -13,7 +13,7 @@ size_t countBits(T v)
 {
     //return std::bitset<std::numeric_limits<T>::digits>(v).count();
 
-    static_assert(std::is_unsigned<T>::value, "Unsigned type of T required");
+    static_assert(std::is_unsigned<T>::value, "T must be unsigned integral type");
     static_assert(std::numeric_limits<T>::digits <= 64, "Max 64 bits of T supported");
 
     constexpr const T m5 = static_cast<T>(0x5555555555555555U);
