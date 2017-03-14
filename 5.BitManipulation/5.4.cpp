@@ -64,12 +64,12 @@ std::tuple<T, T> nextBiggerSmaller(T v)
 
 int main()
 {
-    for (auto v : {
+    for (uint16_t v : {
               0b11011101111U
             , 0U
-            , 0b11111111111111111111111111111111U
-            , 0b01111111111111111111111111111111U
-            , 0b11111111111111111111111111111110U})
+            , 0b1111111111111111U
+            , 0b0111111111111111U
+            , 0b1111111111111110U})
     {
         auto minMax = nextBiggerSmaller(v);
         auto nextMin = std::get<1>(minMax);
