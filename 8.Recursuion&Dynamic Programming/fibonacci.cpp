@@ -25,11 +25,7 @@ long fibonacci_loop(int n)
 
     long fibs[2] = {1, 1};
     for ( ; n > 2; --n)
-    {
-        long newfib = fibs[0] + fibs[1];
-        fibs[0] = fibs[1];
-        fibs[1] = newfib;
-    }
+        fibs[n & 1] = fibs[0] + fibs[1];
     return fibs[0] + fibs[1];
 }
 
