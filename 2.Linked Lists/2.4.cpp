@@ -8,9 +8,7 @@
 // Output:
 //  3 -> 1 -> 2 -> 10 -> 5 -> 5 -> 8
 
-#include <iostream>
-
-#include "forward_list.hpp"
+#include "all.hpp"
 
 template <typename T>
 using Node = typename forward_list<T>::Node;

@@ -1,10 +1,7 @@
 // Zero Matrix: Write an algorithm such that if an element in an MxN matrix is 0, its entire row and
 // column are set to 0.
 
-#include <array>
-#include <iostream>
-
-#include "test.hpp"
+#include "all.hpp"
 
 template<typename T, size_t M, size_t N>
 class array2d

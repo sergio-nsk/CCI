@@ -10,65 +10,65 @@ Person searchLevel(const std::unordered_map<int, Person> &people, BFSData &prima
 
 std::deque<Person> findPathBiBFS(const std::unordered_map<int, Person> &people, int source, int destination)
 {
-	BFSData sourceData(people.at(source));
-	BFSData destData(people.at(destination));
+    BFSData sourceData(people.at(source));
+    BFSData destData(people.at(destination));
 
-	while (!sourceData.isFinished() && !destData.isFinished())
-	{
-		// Search out from source.
-		Person collision = searchLevel(people, sourceData, destData);
-		if (collision)
-			return mergePaths(sourceData, destData, collision->getID());
+    while (!sourceData.isFinished() && !destData.isFinished())
+    {
+        // Search out from source.
+        Person collision = searchLevel(people, sourceData, destData);
+        if (collision)
+            return mergePaths(sourceData, destData, collision->getID());
 
-		// Search out from destination.
-		collision = searchLevel(people, destData, sourceData);
-		if (collision)
-			return mergePaths(sourceData, destData, collision->getID());
-	}
-	return std::deque<Person>();
+        // Search out from destination.
+        collision = searchLevel(people, destData, sourceData);
+        if (collision)
+            return mergePaths(sourceData, destData, collision->getID());
+    }
+    return std::deque<Person>();
 }
 
 Person searchLevel(const std::unordered_map<int, Person> &people, BFSData &primary, BFSData &secondary)
 {
-	// We only want to search one level at a time. Count how many nodes are currently in the primary's
-	// level and only do that many nodes. We'll continue to add nodes to the end.
-	int count = primary.toVisit.size();
-	for (int i = 0; i < count; i++) {
-		// Pull out first node.
-		PathNode pathNode = primary.toVisit.front();
-		primary.toVisit.pop();
-		int personId = pathNode->getPerson()->getID();
+    // We only want to search one level at a time. Count how many nodes are currently in the primary's
+    // level and only do that many nodes. We'll continue to add nodes to the end.
+    int count = primary.toVisit.size();
+    for (int i = 0; i < count; i++) {
+        // Pull out first node.
+        PathNode pathNode = primary.toVisit.front();
+        primary.toVisit.pop();
+        int personId = pathNode->getPerson()->getID();
 
-		// Check if it's already been visited.
-		if (secondary.visited.find(personId) != secondary.visited.end())
-			return pathNode->getPerson();
+        // Check if it's already been visited.
+        if (secondary.visited.find(personId) != secondary.visited.end())
+            return pathNode->getPerson();
 
-		// Add friends to queue.
-		Person person = pathNode->getPerson();
-		auto friends = person->getFriends();
-		for (int friendId : friends)
-		{
-			if (primary.visited.find(friendId) == primary.visited.end())
-			{
-				auto f = people.at(friendId);
-				auto next = std::make_shared<PathNodeImpl>(f, pathNode);
-				primary.visited[friendId] = next;
-				primary.toVisit.push(next);
-			}
-		}
-	}
-	return nullptr;
+        // Add friends to queue.
+        Person person = pathNode->getPerson();
+        auto friends = person->getFriends();
+        for (int friendId : friends)
+        {
+            if (primary.visited.find(friendId) == primary.visited.end())
+            {
+                auto f = people.at(friendId);
+                auto next = std::make_shared<PathNodeImpl>(f, pathNode);
+                primary.visited[friendId] = next;
+                primary.toVisit.push(next);
+            }
+        }
+    }
+    return nullptr;
 }
 
 std::deque<Person> mergePaths(BFSData &bfs1, BFSData &bfs2, int connection)
 {
-	PathNode end1 = bfs1.visited.at(connection); // end1 -> source
-	PathNode end2 = bfs2.visited.at(connection); // end2 -> dest
-	auto pathOne = end1->collapse(false); // forward: source -> connection
-	auto pathTwo = end2->collapse(true); // reverse: connection -> dest
-	pathTwo.pop_front(); // remove connection
-	pathOne.insert(pathOne.end(), pathTwo.begin(), pathTwo.end()); // add second path
-	return pathOne;
+    PathNode end1 = bfs1.visited.at(connection); // end1 -> source
+    PathNode end2 = bfs2.visited.at(connection); // end2 -> dest
+    auto pathOne = end1->collapse(false); // forward: source -> connection
+    auto pathTwo = end2->collapse(true); // reverse: connection -> dest
+    pathTwo.pop_front(); // remove connection
+    pathOne.insert(pathOne.end(), pathTwo.begin(), pathTwo.end()); // add second path
+    return pathOne;
 }
 
 void printPeople(const std::deque<Person> &path)

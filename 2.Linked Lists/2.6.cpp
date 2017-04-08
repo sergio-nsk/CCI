@@ -1,9 +1,6 @@
 // Palindrome: Implement a function to check if a linked list is a palindrome.
 
-#include <iostream>
-
-#include "forward_list.hpp"
-#include <test.hpp>
+#include "all.hpp"
 
 template <typename T>
 bool isPalindromeRec(const typename forward_list<T>::Node *node, const typename forward_list<T>::Node *&forward, int len)

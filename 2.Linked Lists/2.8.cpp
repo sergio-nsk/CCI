@@ -1,10 +1,7 @@
 // Loop Detection: Given a circular linked list, implement an algorithm that returns the node at the
 // beginning of the loop.
 
-#include <iostream>
-
-#include "forward_list.hpp"
-#include <test.hpp>
+#include "all.hpp"
 
 template <typename T>
 using Node = typename forward_list<T>::Node;

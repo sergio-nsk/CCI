@@ -6,39 +6,39 @@
 
 class Product
 {
-	static int counter;
+    static int counter;
 
 public:
-	/* This is an algorithm called the peasant algorithm.
-	 * https://en.wikipedia.org/wiki/Multiplication_algorithm#Peasant_or_binary_multiplication
-	 */
-	static int minProduct(int a, int b)
+    /* This is an algorithm called the peasant algorithm.
+     * https://en.wikipedia.org/wiki/Multiplication_algorithm#Peasant_or_binary_multiplication
+     */
+    static int minProduct(int a, int b)
     {
-		if (a < b)
+        if (a < b)
             return minProduct(b, a);
-		int value = 0;
-		while (a > 0)
+        int value = 0;
+        while (a > 0)
         {
-			++counter;
-			if (a % 2 == 1)
-				value += b;
-			a >>= 1;
-			b <<= 1;
-		}
-		return value;
-	}
+            ++counter;
+            if (a % 2 == 1)
+                value += b;
+            a >>= 1;
+            b <<= 1;
+        }
+        return value;
+    }
 
-	static void main()
+    static void main()
     {
-		for (int i = 0; i < 1000; i++) {
-			for (int j = 0; j < 1000; j++) {
-				int prod1 = minProduct(i, j);
-				int prod2 = i * j;
-				if (prod1 != prod2)
+        for (int i = 0; i < 1000; i++) {
+            for (int j = 0; j < 1000; j++) {
+                int prod1 = minProduct(i, j);
+                int prod2 = i * j;
+                if (prod1 != prod2)
                     std::cout << "ERROR: " << i << " * " << j << " = " << prod2 << ", not " << prod1 << std::endl;
-			}
-		}
-	}
+            }
+        }
+    }
 
 };
 

@@ -8,13 +8,7 @@
 // Output:
 //  True (permutations: "taco cat'; "atc o eta·; etc.)
 
-#include <string>
-#include <array>
-#include <algorithm>
-#include <iostream>
-#include <bitset>
-
-#include "test.hpp"
+#include "all.hpp"
 
 bool isPalindromePermutation(const std::string &str)
 {

@@ -1,9 +1,6 @@
 // Remove Dups: Write code to remove duplicates from an unsorted linked list.
 
-#include <test.hpp>
-#include <iostream>
-#include <unordered_set>
-#include "forward_list.hpp"
+#include "all.hpp"
 
 template <typename T>
 bool removeDups(forward_list<T> &list)

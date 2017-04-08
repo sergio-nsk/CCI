@@ -5,9 +5,7 @@
 // lnput:the node c from the linked lista->b->c->d->e->f
 // Result: nothing is returned, but the new linked list looks likea->b->d->e- >f
 
-#include <iostream>
-
-#include "forward_list.hpp"
+#include "all.hpp"
 
 template <typename T>
 using Node = typename forward_list<T>::Node;

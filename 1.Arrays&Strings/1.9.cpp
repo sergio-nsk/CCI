@@ -2,9 +2,7 @@
 // of another. Given two strings, sl and s2, write code to check if s2 is a rotation of sl using only one
 // call to isSubstring (e.g., "waterbottle" is a rotation of "erbottlewat").
 
-#include <iostream>
-
-#include "test.hpp"
+#include "all.hpp"
 
 bool checkRotation(std::string &&one, std::string &&two)
 {

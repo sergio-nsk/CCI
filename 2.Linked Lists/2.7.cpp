@@ -3,10 +3,7 @@
 // node of the first linked list is the exact same node (by reference) as the jth node of the second
 // linked list, then they are intersecting.
 
-#include <iostream>
-
-#include "forward_list.hpp"
-#include <test.hpp>
+#include "all.hpp"
 
 template <typename T>
 const typename forward_list<T>::Node *findIntersectEq(const typename forward_list<T>::Node *first, const typename forward_list<T>::Node *second, int &Kth)

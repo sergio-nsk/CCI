@@ -8,10 +8,7 @@
 // Output:
 //  "Mr%20John%20Smith"
 
-#include <algorithm>
-#include <iostream>
-
-#include "test.hpp"
+#include "all.hpp"
 
 // I may assume but I don't assume that the string has sufficient space ath the end
 bool encodeSpaces(std::string &url)

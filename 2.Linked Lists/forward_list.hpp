@@ -8,16 +8,13 @@ public:
     {
     }
 
-    forward_list(forward_list &&rhv)
+    forward_list(forward_list &&rhv) : head(std::move(rhv.head)), len(std::move(rhv.len))
     {
-        head = rhv.head;
-        last = rhv.last;
-        len = rhv.len;
-        rhv.head = rhv.last = nullptr;
+        rhv.head = nullptr;
         rhv.len = 0;
     }
 
-    forward_list(std::initializer_list<T> &&initVals) : forward_list()
+    forward_list(std::initializer_list<T> initVals) : forward_list()
     {
         for (auto &v : initVals)
             push_back(v);
@@ -25,9 +22,12 @@ public:
 
     forward_list<T> &operator = (forward_list<T> &&r)
     {
+        if (this == &r)
+            return;
+
         clear();
-        head = r.head;
-        len = r.len;
+        head = std::move(r.head);
+        len = std::move(r.len);
         r.head = nullptr;
         r.len = 0;
         return *this;
@@ -39,11 +39,6 @@ public:
     }
 
   public:
-    // template <typename T>
-    // class Node : std::pair<T, Node<T> *>
-    // {
-    // };
-
     struct Node
     {
         T value;

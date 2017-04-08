@@ -1,9 +1,6 @@
 // Return Kth to Last: Implement an algorithm to find the kth to last element of a singly linked list.
 
-#include <iostream>
-
-#include <test.hpp>
-#include "forward_list.hpp"
+#include "all.hpp"
 
 template <typename T>
 bool kthToLast(const forward_list<T> &list, int k, T &value)

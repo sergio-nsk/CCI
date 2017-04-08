@@ -3,11 +3,7 @@
 // "compressed" string would not become smaller than the original string, your method should return
 // the original string. You can assume the string has only uppercase and lowercase letters (a - z).
 
-#include <string>
-#include <iostream>
-#include <sstream>
-
-#include "test.hpp"
+#include "all.hpp"
 
 // I decided do not compress single characters like b --> b1
 bool compress(std::string &str)

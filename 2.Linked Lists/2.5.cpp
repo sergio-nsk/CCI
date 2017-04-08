@@ -11,11 +11,7 @@
 // lnput:(6 -> 1 -> 7) + (2 -> 9 -> 5).That is,617 + 295.
 // Output: 9 -> 1 -> 2. That is, 912.
 
-#include <iostream>
-#include <cassert>
-
-#include "forward_list.hpp"
-#include <test.hpp>
+#include "all.hpp"
 
 template<typename T>
 auto sum0N(const forward_list<T> &first, const forward_list<T> &second)
@@ -34,7 +30,7 @@ auto sum0N(const forward_list<T> &first, const forward_list<T> &second)
         result.push_back(s);
     }
     if (overflow)
-        result.push_back(1);        
+        result.push_back(1);
 
     return result;
 }

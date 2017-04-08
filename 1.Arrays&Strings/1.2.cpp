@@ -1,10 +1,7 @@
 // Check Permutation: Given two strings, write a method to decide if one is a permutation of the
 // other.
 
-#include <iostream>
-#include <algorithm>
-
-#include "test.hpp"
+#include "all.hpp"
 
 bool checkPermutation(std::string &&one, std::string &&two)
 {
