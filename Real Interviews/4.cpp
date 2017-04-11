@@ -6,6 +6,8 @@
 #include <string>
 #include <algorithm>
 #include <bitset>
+#include <vector>
+#include <array>
 #include <iostream>
 
 //
@@ -79,7 +81,7 @@ bool checkPermutation(std::vector<int> charcount, const std::array<char, 256> &c
 bool findPermutation3(const std::string &str, const std::string &substr)
 {
     std::vector<int> charcount;
-    std::array<char, 256> charmap;
+    std::array<char, 256> charmap; // used to make vector as less as possible
 
     std::fill(&charmap[0], &charmap[0] + charmap.size(), -1);
 
@@ -111,10 +113,10 @@ bool findPermutation3(const std::string &str, const std::string &substr)
 
 int main()
 {
-    std::cout << (findPermutation("cdfddbacg", "ddbac") ? "true" : "false") << std::endl;
-    std::cout << (findPermutation("cddfdbacg", "ddbac") ? "true" : "false") << std::endl;
-    std::cout << (findPermutation2("cdfddbacg", "ddbac") ? "true" : "false") << std::endl;
-    std::cout << (findPermutation2("cddfdbacg", "ddbac") ? "true" : "false") << std::endl;
-    std::cout << (findPermutation3("cdfddbacg", "ddbac") ? "true" : "false") << std::endl;
-    std::cout << (findPermutation3("cddfdbacg", "ddbac") ? "true" : "false") << std::endl;
+    std::cout << (findPermutation("cdfddbacg", "dabcd") ? "true" : "false") << std::endl;
+    std::cout << (findPermutation("cddfdbacg", "dabcd") ? "true" : "false") << std::endl;
+    std::cout << (findPermutation2("cdfddbacg", "dabcd") ? "true" : "false") << std::endl;
+    std::cout << (findPermutation2("cddfdbacg", "dabcd") ? "true" : "false") << std::endl;
+    std::cout << (findPermutation3("cdfddbacg", "dabcd") ? "true" : "false") << std::endl;
+    std::cout << (findPermutation3("cddfdbacg", "dabcd") ? "true" : "false") << std::endl;
 }
