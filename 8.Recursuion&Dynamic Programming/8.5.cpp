@@ -30,8 +30,10 @@ public:
 
     static void main()
     {
-        for (int i = 0; i < 1000; i++) {
-            for (int j = 0; j < 1000; j++) {
+        for (int i = 0; i < 1000; i++)
+        {
+            for (int j = 0; j < 1000; j++)
+            {
                 int prod1 = minProduct(i, j);
                 int prod2 = i * j;
                 if (prod1 != prod2)

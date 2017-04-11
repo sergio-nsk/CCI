@@ -36,7 +36,7 @@ int countEval(const std::string &s, bool result, std::unordered_map<std::string,
         int leftFalse = countEval(left, false, map);
         int rightTrue = countEval(right, true, map);
         int rightFalse = countEval(right, false, map);
-        int total= (leftTrue + leftFalse) * (rightTrue + rightFalse);
+        int total = (leftTrue + leftFalse) * (rightTrue + rightFalse);
         int totalTrue = 0;
         switch (c)
         {
