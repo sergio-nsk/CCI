@@ -1,11 +1,7 @@
 // Group Anagrams: Write a method to sort an array ot strings so that all tne anagrams are next to
 // each other.
 
-#include <string>
-#include <algorithm>
-#include <vector>
-#include <unordered_map>
-#include <iostream>
+#include "all.hpp"
 
 std::string sortString(const std::string &s)
 {
