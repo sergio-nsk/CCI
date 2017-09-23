@@ -27,7 +27,7 @@ char *encodeSpaces(char *url, size_t capacity, size_t len)
     // from -> \0
     char *to = from + cnt * 2;
     if (to >= url + capacity)
-        return NULL;    // Not enouth capacity
+        return NULL;    // Not enough capacity
 
     for ( ; to > from; --from)
     {
