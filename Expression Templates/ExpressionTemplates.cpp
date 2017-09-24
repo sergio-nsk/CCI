@@ -36,6 +36,8 @@
 //          sum[i] = u[i] + v[i];
 //     return sum;
 // }
+//
+// The problem: expression Vector x = v1 + v2 + v3 produces temporaries.
 
 template <typename E>
 class VectorExpression
@@ -43,24 +45,24 @@ class VectorExpression
 public:
     double operator [] (std::size_t i) const
     {
-        return static_cast<const E&>(*this)[i];
+        return static_cast<const E &>(*this)[i];
     }
 
     std::size_t size() const
     {
-        return static_cast<const E&>(*this).size();
+        return static_cast<const E &>(*this).size();
     }
 
     // The following overload conversions to E, the template argument type;
     // e.g., for VecExpression<VecSum>, this is a conversion to VecSum.
-    operator E& ()
+    operator E &()
     {
-        return static_cast<E&>(*this);
+        return static_cast<E &>(*this);
     }
 
-    operator const E& () const
+    operator const E &() const
     {
-        return static_cast<const E&>(*this);
+        return static_cast<const E &>(*this);
     }
 };
 
@@ -80,9 +82,10 @@ public:
 
     // construct from any VectorExpression, forcing its evaluation.
     template <typename E>
-    Vector(const VectorExpression<E>& vec) : elems(vec.size())
+    Vector(const VectorExpression<E> &vec) : elems(vec.size())
     {
-        for (std::size_t i = 0; i != vec.size(); ++i) {
+        for (std::size_t i = 0; i != vec.size(); ++i)
+        {
             elems[i] = vec[i];
         }
     }
@@ -109,11 +112,11 @@ private:
 template <typename E1, typename E2>
 class VectorSum : public VectorExpression<VectorSum<E1, E2> >
 {
-    const E1& _u;
-    const E2& _v;
+    const E1 &_u;
+    const E2 &_v;
 
 public:
-    VectorSum(const E1& u, const E2& v) : _u(u), _v(v)
+    VectorSum(const E1 &u, const E2 &v) : _u(u), _v(v)
     {
         assert(u.size() == v.size());
     }
@@ -130,7 +133,7 @@ public:
 };
 
 template <typename E1, typename E2>
-const VectorSum<E1, E2> operator + (const E1& u, const E2& v)
+const VectorSum<E1, E2> operator + (const E1 &u, const E2 &v)
 {
     return VectorSum<E1, E2>(u, v);
 }
@@ -148,13 +151,8 @@ int main()
     Vector v0 = {23.4,  12.5,  144.56, 90.56};
     Vector v1 = {67.12,  34.8,  90.34, 89.30};
     Vector v2 = {34.90, 111.9,  45.12, 90.5 };
-    VectorSum<VectorSum<Vector, Vector>, Vector> sum = v0 + v1 + v2;
+    Vector sum = v0 + v1 + v2;
 
-    Vector v3(4);
-
-    for (auto i = 0U; i < v0.size(); ++i)
-         v3[i] = sum[i];
-
-    for (auto i = 0U; i < v3.size(); ++i)
-         std::cout << v3[i] << std::endl;
+    for (auto i = 0U; i < sum.size(); ++i)
+         std::cout << sum[i] << std::endl;
 }
