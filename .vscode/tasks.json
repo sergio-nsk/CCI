@@ -1,58 +1,29 @@
-// {
-//     "version": "0.1.0",
-//     "command": "make",
-//     "isShellCommand": true,
-//     "tasks": [
-//         {
-//             "taskName": "Makefile",
-//             // Make this the default build command.
-//             "isBuildCommand": true,
-//             // Show the output window only if unrecognized errors occur.
-//             "showOutput": "always",
-//             // No args
-//             "args": ["all"],
-//             // Use the standard less compilation problem matcher.
-//             "problemMatcher": {
-//                 "owner": "cpp",
-//                 "fileLocation": ["relative", "${workspaceRoot}"],
-//                 "pattern": {
-//                     "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
-//                     "file": 1,
-//                     "line": 2,
-//                     "column": 3,
-//                     "severity": 4,
-//                     "message": 5
-//                 }
-//             }
-//         },
-//     ]
-// }
 {
-    "version": "0.1.0",
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
     "tasks": [
         {
             "taskName": "g++14",
+            "type": "process",
             "command": "g++",
-            "showOutput": "always",
-            "args": ["-g", "-std=c++14", "-I.", "-Wall", "-pedantic", "${file}", "-pthread", "-o", "${fileDirname}/a.out"],
-            "problemMatcher": {
-                "owner": "cpp",
-                "fileLocation": ["absolute"],
-                "pattern": {
-                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
-                    "file": 1,
-                    "line": 2,
-                    "column": 3,
-                    "severity": 4,
-                    "message": 5
-                }
-            }
-        },
-        {
-            "taskName": "g++11",
-            "command": "g++",
-            "showOutput": "always",
-            "args": ["-g", "-std=c++11", "-I.", "-Wall", "-pedantic", "${file}", "-pthread", "-o", "${fileDirname}/a.out"],
+            "args": [
+				"-g",
+				"-std=c++14",
+				"-I.",
+				"-Wall",
+                "-pedantic",
+                "-fsanitize=undefined",
+				"${file}",
+				"-pthread",
+				"-o",
+				"${fileDirname}/a.out"
+            ],
+            "group": "build",
+            "presentation": {
+                // Reveal the output only if unrecognized errors occur.
+                "reveal": "silent"
+            },
             "problemMatcher": {
                 "owner": "cpp",
                 "fileLocation": ["absolute"],
