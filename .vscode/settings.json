@@ -11,5 +11,6 @@
         "--module-rgx=",
         "--variable-rgx=[a-z_][a-zA-Z0-9_]{,30}$"
     ],
-    "clang.cxxflags": ["-std=c++14"]
+    "clang.cxxflags": ["-std=c++14"],
+    "C_Cpp.intelliSenseEngine": "Default"
 }
