@@ -1,5 +1,5 @@
 // Compress long string.
-// Example:  "AAAAAAAAAAAAAAABBC" -> "A15B2C"
+// Example:  "AAAAAAAAAAAAAAABBCD" -> "A15B2CD"
 
 #include <string>
 #include <iostream>
@@ -30,7 +30,8 @@ std::string &Compress(std::string &str)
         else
         {
             *dst++ = c;
-            dst = Replace(str, dst, std::to_string(cnt));
+            if (cnt > 1)
+                dst = Replace(str, dst, std::to_string(cnt));
             c = *src++;
             cnt = 1;
         }
@@ -44,6 +45,6 @@ std::string &Compress(std::string &str)
 
 int main()
 {
-    std::string str = "AAAAAAAAAAAAAAABBC";
+    std::string str = "AAAAAAAAAAAAAAABBCD";
     std::cout << Compress(str) << std::endl;
 }
