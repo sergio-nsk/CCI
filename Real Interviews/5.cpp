@@ -1,3 +1,5 @@
+// Intersect two C++ sets
+
 #include <set>
 #include <iostream>
 

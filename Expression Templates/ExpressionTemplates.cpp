@@ -1,5 +1,5 @@
 #include <vector>
-#include <assert.h>
+#include <cassert>
 #include <iostream>
 
 // class Vector
