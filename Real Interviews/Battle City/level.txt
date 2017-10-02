@@ -1,0 +1,29 @@
+..........................
+..........................
+..BB..BB..BB..BB..BB..BB..
+..BB..BB..BB..BB..BB..BB..
+..BB..BB..BB..BB..BB..BB..
+..BB..BB..BB..BB..BB..BB..
+..BB..BB..BBWWBB..BB..BB..
+..BB..BB..BBWWBB..BB..BB..
+..BB..BB..BB..BB..BB..BB..
+..BB..BB..........BB..BB..
+..BB..BB..........BB..BB..
+..........BB..BB..........
+..........BB..BB..........
+BB..BBBB..........BBBB..BB
+WW..BBBB..........BBBB..WW
+..........BB..BB..........
+..........BBBBBB..........
+..BB..BB..BBBBBB..BB..BB..
+..BB..BB..BB..BB..BB..BB..
+..BB..BB..BB..BB..BB..BB..
+..BB..BB..BB..BB..BB..BB..
+..BB..BB..........BB..BB..
+..BB..BB..........BB..BB..
+..BB..BB...BBBB...BB..BB..
+...........BHHB...........
+...........BHHB...........
+# B - break
+# W - wall
+# H - headquarters
