@@ -36,7 +36,7 @@ bool Level::initBoardLine(int y, const std::array<std::string, GameObject::CellC
         std::bitset<GameObject::CellCount * GameObject::CellCount> cells;
         auto kind = ObjectKind::Space;
 
-        for (int i = 0; i < GameObject::CellCount; ++ i)
+        for (int i = 0; i != GameObject::CellCount; ++i)
         {
             for (int j = x * GameObject::CellCount; j < (x + 1) * GameObject::CellCount; ++j)
             {
