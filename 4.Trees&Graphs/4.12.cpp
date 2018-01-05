@@ -35,8 +35,8 @@ int sumsFrom(const NodePtr<int> &node, int requiredSum, int pathSum, std::unorde
 
 int countPathsWithSum(const Tree<int> &tree, int sum)
 {
-        std::unordered_map<int, int> tmp;
-        return sumsFrom(tree.getRoot(), sum, 0, tmp);
+    std::unordered_map<int, int> tmp;
+    return sumsFrom(tree.getRoot(), sum, 0, tmp);
 }
 
 int main()
