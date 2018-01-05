@@ -72,8 +72,8 @@ void test(const Graph<States> &graph)
 int main()
 {
     test(TestUtils::createGraph<States>({"a", "b", "c", "d", "e", "f"},
-        {{"a", "d"}, {"f", "b"}, {"b", "d"}, {"f", "a"}, {"d", "c"}}));
-    
+        {{{"a", "d"}}, {{"f", "b"}}, {{"b", "d"}}, {{"f", "a"}}, {{"d", "c"}}}));
+
     test(TestUtils::createGraph<States>({"a", "b", "c", "d", "e", "f", "g"},
-        {{"a", "e"}, {"b", "a"}, {"b", "e"}, {"c", "a"}, {"d", "g"}, {"f", "a"}, {"f", "b"}, {"f", "c"}}));
+        {{{"a", "e"}}, {{"b", "a"}}, {{"b", "e"}}, {{"c", "a"}}, {{"d", "g"}}, {{"f", "a"}}, {{"f", "b"}}, {{"f", "c"}}}));
 }

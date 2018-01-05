@@ -26,25 +26,25 @@
         {
             "name": "Linux",
             "includePath": [
-                "/usr/include/x86_64-linux-gnu/c++/5",
+                "${workspaceRoot}",
                 "/usr/include/c++/5",
-                "/usr/local/include",
-                "/usr/lib/clang/3.8.0/include",
-                "/usr/include/x86_64-linux-gnu",
-                "/usr/include",
-                "${workspaceRoot}"
+                "/usr/include/x86_64-linux-gnu/c++/5",
+                "/usr/lib/llvm-4.0/lib/clang/4.0.0/include"
             ],
-            "defines": [],
+            "defines": [
+                "DEBUG"
+            ],
             "intelliSenseMode": "clang-x64",
             "browse": {
                 "path": [
-                    "/usr/include/x86_64-linux-gnu/c++/5",
+                    "${workspaceRoot}",
                     "/usr/include/c++/5",
+                    "/usr/include/x86_64-linux-gnu/c++/5",
+                    "/usr/include/x86_64-linux-gnu/c++/5/bits",
                     "/usr/local/include",
                     "/usr/lib/clang/3.8.0/include",
                     "/usr/include/x86_64-linux-gnu",
-                    "/usr/include",
-                    "${workspaceRoot}"
+                    "/usr/include"
                 ],
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""
@@ -53,8 +53,7 @@
         {
             "name": "Win32",
             "includePath": [
-                "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/include",
-                "${workspaceRoot}"
+                "${workspaceFolder}"
             ],
             "defines": [
                 "_DEBUG",
@@ -63,8 +62,8 @@
             "intelliSenseMode": "msvc-x64",
             "browse": {
                 "path": [
-                    "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/include/*",
-                    "${workspaceRoot}"
+                    "${workspaceFolder}",
+                    "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/include/*"
                 ],
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""

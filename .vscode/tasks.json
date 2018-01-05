@@ -4,9 +4,9 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "taskName": "g++14",
+            "label": "clang++14",
             "type": "process",
-            "command": "g++",
+            "command": "clang++",
             "args": [
 				"-g",
 				"-std=c++14",

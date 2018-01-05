@@ -13,7 +13,7 @@
             "externalConsole": true,
             "visualizerFile": "/home/sergej/.config/Code/User/visualizer.natvis",
             "linux": {
-                "MIMode": "gdb",
+                "MIMode": "lldb",
                 "setupCommands": [
                     {
                         "description": "Enable pretty-printing for gdb",
@@ -41,9 +41,9 @@
             "type": "cppdbg",
             "request": "attach",
             "program": "${fileDirname}/a.out",
-            "processId": "${command.pickProcess}",
+            "processId": "${env:command.pickProcess}",
             "linux": {
-                "MIMode": "gdb",
+                "MIMode": "lldb",
                 "setupCommands": [
                     {
                         "description": "Enable pretty-printing for gdb",
