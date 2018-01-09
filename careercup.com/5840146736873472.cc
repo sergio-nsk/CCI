@@ -17,7 +17,7 @@ std::string::const_iterator expanded(const std::string &str, std::string::const_
       out.push_back(*start++);
     else if (std::isdigit(*start)) {
       char *end = nullptr;
-      auto cnt = std::strtol(&*start, &end, 10);
+      auto cnt = std::strtol(&*start, &end, 10);  // possible read out of memory
       if (cnt == 0 || *end != '[')
         return str.end();
       start += end - &*start + 1;
