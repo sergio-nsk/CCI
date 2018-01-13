@@ -3,7 +3,7 @@
     "configurations": [
         {
             "name": "C++ Launch",
-            "type": "cppdbg",
+            "type": "lldb",
             "request": "launch",
             "program": "${fileDirname}/a.out",
             "args": [],

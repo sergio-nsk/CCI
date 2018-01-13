@@ -29,7 +29,7 @@
                 "${workspaceRoot}",
                 "/usr/include/c++/5",
                 "/usr/include/x86_64-linux-gnu/c++/5",
-                "/usr/lib/llvm-4.0/lib/clang/4.0.0/include"
+                "/usr/lib/llvm-5.0/lib/clang/5.0.0/include"
             ],
             "defines": [
                 "DEBUG"
@@ -42,7 +42,7 @@
                     "/usr/include/x86_64-linux-gnu/c++/5",
                     "/usr/include/x86_64-linux-gnu/c++/5/bits",
                     "/usr/local/include",
-                    "/usr/lib/clang/3.8.0/include",
+                    "/usr/lib/clang/5.0/include",
                     "/usr/include/x86_64-linux-gnu",
                     "/usr/include"
                 ],

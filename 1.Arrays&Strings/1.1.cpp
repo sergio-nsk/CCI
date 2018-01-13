@@ -1,60 +1,58 @@
-// Is Unique: Implement an algorithm to determine if a string has all unique characters. What if you
-// cannot use additional data structures?
+// Is Unique: Implement an algorithm to determine if a string has all unique
+// characters. What if you cannot use additional data structures?
 
 #include "all.hpp"
 
-bool isUnique(const std::string &chars)
-{
-    // [a-zA-z]
-    uint64_t setChars = 0;
+bool isUnique(const std::string& chars) {
+  // [a-zA-z]
+  uint64_t setChars = 0;
 
-    for (auto &c : chars)
-    {
-        if (c < 'A' || (c > 'Z' && c < 'a') || c > 'z')
-            throw;
-        uint64_t bit = (1ULL << (c - 'A'));
-        if (setChars & bit)
-            return false;
-        setChars |= bit;
-    }
+  for (auto& c : chars) {
+    if (c < 'A' || (c > 'Z' && c < 'a') || c > 'z')
+      throw;
+    uint64_t bit = (1ULL << (c - 'A'));
+    if (setChars & bit)
+      return false;
+    setChars |= bit;
+  }
 
-    return true;
+  return true;
 }
 
-bool isUniqueW(const std::wstring &chars)
-{
-    // all wchars
-    std::unordered_set<wchar_t> setChars;
+bool isUniqueW(const std::wstring& chars) {
+  // all wchars
+  std::unordered_set<wchar_t> setChars;
 
-    for (auto &c : chars)
-    {
-        if (setChars.find(c) != setChars.end())
-            return false;
-        setChars.emplace(c);
-    }
+  for (auto& c : chars) {
+    if (setChars.find(c) != setChars.end())
+      return false;
+    setChars.emplace(c);
+  }
 
-    return true;
+  return true;
 }
 
-auto printResult = [](bool result, auto &&chars)
-{
-    std::cout << '"' << chars << "\" " << (result ? "passed " : "failed") << std::endl;
+auto printResult = [](bool result, auto&& chars) {
+  std::cout << '"' << chars << "\" " << (result ? "passed " : "failed")
+            << std::endl;
 };
 
-auto printResultW = [](bool result, auto &&chars)
-{
-    // wide to utf-8
-    std::wstring_convert<std::codecvt_utf8<wchar_t>> convert;
-    printResult(result, convert.to_bytes(chars));
+auto printResultW = [](bool result, auto&& chars) {
+  // wide to utf-8
+  std::wstring_convert<std::codecvt_utf8<wchar_t>> convert;
+  printResult(result, convert.to_bytes(chars));
 };
 
-int main()
-{
-    test(isUnique, printResult, "IsUnique");
-    test(isUnique, printResult, "IsUniqueTest");
-    test(isUniqueW, printResultW, L"IsUnique\u0423\u043d\u0438\u043a\u0430\u043b\u044c\u043d\u044b\u0439"); // IsUniqueУникальный
-    test(isUniqueW, printResultW, L"IsUnique\u0423\u043d\u0438\u043a\u0430\u043b\u044c"); // IsUniqueУникаль
-    test(isUniqueW, printResultW, L"z\u00df\u6c34\U0001f34c"); // zß水🍌
-    test(isUniqueW, printResultW, L"z\u00df\u6c34\U0001f34c\u00df"); // zß水🍌ß
-    return 0;
+int main() {
+  test(isUnique, printResult, "IsUnique");
+  test(isUnique, printResult, "IsUniqueTest");
+  test(
+      isUniqueW, printResultW,
+      L"IsUnique\u0423\u043d\u0438\u043a\u0430\u043b\u044c\u043d\u044b\u0439");  // IsUniqueУникальный
+  test(
+      isUniqueW, printResultW,
+      L"IsUnique\u0423\u043d\u0438\u043a\u0430\u043b\u044c");  // IsUniqueУникаль
+  test(isUniqueW, printResultW, L"z\u00df\u6c34\U0001f34c");  // zß水🍌
+  test(isUniqueW, printResultW, L"z\u00df\u6c34\U0001f34c\u00df");  // zß水🍌ß
+  return 0;
 }

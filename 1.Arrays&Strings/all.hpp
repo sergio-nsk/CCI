@@ -6,5 +6,5 @@
 #include <locale>
 #include <sstream>
 #include <string>
-#include <unordered_set>
 #include <test.hpp>
+#include <unordered_set>

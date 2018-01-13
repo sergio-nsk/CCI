@@ -19,7 +19,10 @@
 				"-o",
 				"${fileDirname}/a.out"
             ],
-            "group": "build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
             "presentation": {
                 // Reveal the output only if unrecognized errors occur.
                 "reveal": "silent"
