@@ -56,14 +56,15 @@ size_t sizeOfCompressedString(const std::string& str) {
   for (auto i = str.begin(); i != str.end(); ++i) {
     ++charCount;
     if (i + 1 == str.end() || *i != *(i + 1)) {
-      len += 1 + std::to_string(charCount).length();
+      len += 1;
+      if (charCount > 1)
+        len += std::to_string(charCount).length();
       charCount = 0;
     }
   }
   return len;
 }
 
-// This function makes b -> b1
 std::string compress2(const std::string& str) {
   if (sizeOfCompressedString(str) >= str.length())
     return str;
@@ -73,7 +74,9 @@ std::string compress2(const std::string& str) {
   for (auto i = str.begin(); i != str.end(); ++i) {
     ++charCount;
     if (i + 1 == str.end() || *i != *(i + 1)) {
-      stringBuilder << *i << charCount;
+      stringBuilder << *i;
+      if (charCount > 1)
+        stringBuilder << charCount;
       charCount = 0;
     }
   }
