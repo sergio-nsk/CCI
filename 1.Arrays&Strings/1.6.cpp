@@ -6,6 +6,14 @@
 
 #include "all.hpp"
 
+void replaceAt(std::string& str, std::string::iterator& at, int num) {
+  if (num < 2)
+    return;
+  std::string count(std::to_string(num));
+  str.replace(at, at + count.length(), count);
+  at += count.length();
+}
+
 // I decided do not compress single characters like b --> b1
 bool compress(std::string& str) {
   // check if string could be compressed, i.e. at least triple char exists
@@ -28,24 +36,14 @@ bool compress(std::string& str) {
   charCount = 1;
   for (auto from = to + 1; from != str.end(); ++from) {
     if (*from != *to) {
-      ++to;
-      if (charCount > 1) {
-        std::string count(std::to_string(charCount));
-        str.replace(to, to + count.length(), count);
-        to += count.length();
-      }
+      replaceAt(str, ++to, charCount);
       *to = *from;
       charCount = 1;
     } else
       ++charCount;
   }
 
-  if (charCount > 1) {
-    ++to;
-    std::string count(std::to_string(charCount));
-    str.replace(to, to + count.length(), count);
-    to += count.length();
-  }
+  replaceAt(str, ++to, charCount);
   str.erase(to, str.end());
   return true;
 }
@@ -101,12 +99,12 @@ int main() {
   std::cout << '"' << str << '"';
   test(compress, print, str);
 
-  str = "aabcccccccccaaa";
+  str = "aabccccccccccaaa";
   test(compress2, print2, str);
   std::cout << '"' << str << '"';
   test(compress, print, str);
 
-  str = "aabccccccccccaaa";
+  str = "aaag";
   test(compress2, print2, str);
   std::cout << '"' << str << '"';
   test(compress, print, str);
