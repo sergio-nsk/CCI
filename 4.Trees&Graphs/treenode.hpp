@@ -6,88 +6,52 @@ template <typename T, bool WithParent = false, bool R = WithParent>
 class Node;
 
 template <typename T, bool R>
-class Node<T, false, R>
-{
-  public:
-    using NodePtr = std::shared_ptr<Node<T, R, R>>;
+class Node<T, false, R> {
+ public:
+  using NodeT = Node<T, R, R>;
 
-    Node(T &&v) : value(std::move(v))
-    {
-    }
+  Node(T&& v) : value(std::move(v)) {}
 
-    Node(const T &v) : value(v)
-    {
-    }
+  Node(const T& v) : value(v) {}
 
-    Node(T &&v, NodePtr) : value(std::move(v))
-    {
-    }
+  Node(T&& v, Node*) : value(std::move(v)) {}
 
-    Node(const T &v, NodePtr) : value(v)
-    {
-    }
+  Node(const T& v, Node*) : value(v) {}
 
-    const T &getValue() const
-    {
-        return value;
-    }
+  const T& getValue() const { return value; }
 
-    const NodePtr &getLeft() const
-    {
-        return childs.first;
-    }
+  const NodeT* getLeft() const { return childs.first.get(); }
 
-    NodePtr &getLeft()
-    {
-        return childs.first;
-    }
+  NodeT* getLeft() { return childs.first.get(); }
 
-    const NodePtr &getRight() const
-    {
-        return childs.second;
-    }
+  std::unique_ptr<Node> extractLeft() { return std::move(childs.first); }
 
-    NodePtr &getRight()
-    {
-        return childs.second;
-    }
+  const NodeT* getRight() const { return childs.second.get(); }
 
-    template <typename U>
-    void setLeft(U &&node)
-    {
-        childs.first = std::forward<U>(node);
-    }
+  NodeT* getRight() { return childs.second.get(); }
 
-    template <typename U>
-    void setRight(U &&node)
-    {
-        childs.second = std::forward<U>(node);
-    }
+  std::unique_ptr<Node> extractRight() { return std::move(childs.second); }
 
-  protected:
-    T value;
-    std::pair<NodePtr, NodePtr> childs;
+  void setLeft(std::unique_ptr<NodeT> node) { childs.first = std::move(node); }
+
+  void setRight(std::unique_ptr<NodeT> node) { childs.second = std::move(node); }
+
+ protected:
+  T value;
+  std::pair<std::unique_ptr<NodeT>, std::unique_ptr<NodeT>> childs;
 };
 
 template <typename T>
-class Node<T, true, true> : public Node<T, false, true>
-{
-  public:
-    using NodePtr = std::shared_ptr<Node<T, true, true>>;
+class Node<T, true, true> : public Node<T, false, true> {
+ public:
+  Node(T&& v, Node* p) : Node<T, false, true>(std::move(v)), parent(p) {}
 
-    Node(T &&v, NodePtr p) : Node<T, false, true>(std::move(v)), parent(p)
-    {
-    }
+  Node(const T& v, Node* p) : Node<T, false, true>(v), parent(p) {}
 
-    Node(const T &v, NodePtr p) : Node<T, false, true>(v), parent(p)
-    {
-    }
+  Node* getParent() { return parent; }
 
-    NodePtr getParent() const
-    {
-        return parent.lock();
-    }
+  const Node* getParent() const { return parent; }
 
-  protected:
-    std::weak_ptr<Node<T, true, true>> parent;
+ protected:
+  Node* parent;
 };

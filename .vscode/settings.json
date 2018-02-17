@@ -5,7 +5,48 @@
     },
     "files.associations": {
         "*.cpp": "cpp",
-        "unordered_map": "cpp"
+        "unordered_map": "cpp",
+        "sstream": "cpp",
+        "*.tcc": "cpp",
+        "array": "cpp",
+        "atomic": "cpp",
+        "bitset": "cpp",
+        "cctype": "cpp",
+        "chrono": "cpp",
+        "clocale": "cpp",
+        "cmath": "cpp",
+        "codecvt": "cpp",
+        "condition_variable": "cpp",
+        "cstdint": "cpp",
+        "cstdio": "cpp",
+        "cstdlib": "cpp",
+        "ctime": "cpp",
+        "cwchar": "cpp",
+        "cwctype": "cpp",
+        "exception": "cpp",
+        "fstream": "cpp",
+        "functional": "cpp",
+        "future": "cpp",
+        "initializer_list": "cpp",
+        "iomanip": "cpp",
+        "iosfwd": "cpp",
+        "iostream": "cpp",
+        "istream": "cpp",
+        "limits": "cpp",
+        "memory": "cpp",
+        "mutex": "cpp",
+        "new": "cpp",
+        "ostream": "cpp",
+        "ratio": "cpp",
+        "stdexcept": "cpp",
+        "streambuf": "cpp",
+        "system_error": "cpp",
+        "thread": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp",
+        "typeinfo": "cpp",
+        "utility": "cpp",
+        "algorithm": "cpp"
     },
     "python.linting.pylintArgs": [
         "--function-rgx=[a-z_][a-zA-Z0-9_]{2,30}$",
@@ -17,6 +58,12 @@
     ],
     "C_Cpp.intelliSenseEngine": "Default",
     "[cpp]": {
+        "editor.tabSize": 2,
+        "editor.rulers": [
+            80
+        ]
+    },
+    "[c]": {
         "editor.tabSize": 2,
         "editor.rulers": [
             80
