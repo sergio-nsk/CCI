@@ -10,34 +10,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void fillHelpInputMatrix(int b1, char* matrix, size_t size) {
-  for (int i = 0; i < size; ++i)
-    matrix[i] = -1;
-  for (int i = '0'; i < b1 + '0' && i <= '9' && i < size; ++i)
-    matrix[i] = i - '0';
-  for (int i = 'A'; i < (b1 - 10) + 'A' && i <= 'F' && i < size; ++i)
-    matrix[i] = 10 + (i - 'A');
-  for (int i = 'a'; i < (b1 - 10) + 'a' && i <= 'f' && i < size; ++i)
-    matrix[i] = 10 + (i - 'a');
-}
-
 void error() {
   printf("bad input\n");
   exit(1);
-}
-
-long long strToNum(const char* matrix,
-                   const char* input,
-                   const char** end_input,
-                   double base) {
-  double result = 0.0;
-  for (; *input != 0 && *input; ++input) {
-    if (matrix[*input] == -1)
-      break;
-    result = base * result + matrix[*input];
-  }
-  *end_input = input;
-  return result;
 }
 
 void output(long long integral, double frac, int b2) {
@@ -65,8 +40,7 @@ void output(long long integral, double frac, int b2) {
 int main(int argc, char** argv) {
   int b1, b2;
   char input[14] = {0};
-  const char* end = input;
-  char matrix[256];
+  char* end = input;
   long long integral = 0;
   double frac = 0.0;
 
@@ -77,13 +51,12 @@ int main(int argc, char** argv) {
   if (scanf("%13s", input) != 1)
     error();
 
-  fillHelpInputMatrix(b1, matrix, sizeof(matrix));
-  integral = strToNum(matrix, input, &end, b1);
+  integral = strtoll(input, &end, b1);
   if (input == end || (*end && *end != '.'))
     error();
   if (*end == '.') {
     const char* str = end + 1;
-    frac = strToNum(matrix, str, &end, b1);
+    frac = strtoll(str, &end, b1);
     if (str == end || *end)
       error();
     frac /= pow(b1, end - str);
