@@ -39,6 +39,13 @@
                     "message": 5
                 }
             }
+        },
+        {
+            "label": "SO",
+            "type": "process",
+            "command":"/bin/bash",
+            "args": [ "-c", "clang++ $(pkg-config --cflags --libs opencv gl glew sdl2) -g ${workspaceFolder}/*.cpp -lstdc++fs -pthread"],
+             "group": "build"
         }
     ]
 }
