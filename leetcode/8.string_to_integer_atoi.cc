@@ -49,9 +49,9 @@
 
 #include <cstdint>
 #include <iostream>
+#include <limits>
 #include <string>
 #include "playground.h"
-
 
 class Solution {
  public:
@@ -69,10 +69,10 @@ class Solution {
     while (i < str.size() && str[i] >= '0' && str[i] <= '9') {
       r = 10 * r + (str[i++] - '0');
       if (!s) {
-        if (r > INT_MAX)
-          return INT_MAX;
-      } else if (r > -static_cast<long long>(INT_MIN)) {
-        return INT_MIN;
+        if (r > std::numeric_limits<int>::max())
+          return std::numeric_limits<int>::max();
+      } else if (r > -static_cast<long long>(std::numeric_limits<int>::min())) {
+        return std::numeric_limits<int>::min();
       }
     }
     return s ? -r : r;

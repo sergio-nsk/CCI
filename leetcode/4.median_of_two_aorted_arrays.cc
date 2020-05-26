@@ -20,6 +20,7 @@
 
 #include <algorithm>
 #include <iostream>
+#include <limits>
 #include <string>
 #include <vector>
 #include "playground.h"
@@ -37,10 +38,14 @@ class Solution {
     while (l <= h) {
       int part_1 = (l + h) / 2;
       int part_2 = (s1 + s2 + 1) / 2 - part_1;
-      int max_1 = (part_1 == 0) ? INT_MIN : nums1[part_1 - 1];
-      int min_1 = (part_1 == s1) ? INT_MAX : nums1[part_1];
-      int max_2 = (part_2 == 0) ? INT_MIN : nums2[part_2 - 1];
-      int min_2 = (part_2 == s2) ? INT_MAX : nums2[part_2];
+      int max_1 =
+          (part_1 == 0) ? std::numeric_limits<int>::min() : nums1[part_1 - 1];
+      int min_1 =
+          (part_1 == s1) ? std::numeric_limits<int>::max() : nums1[part_1];
+      int max_2 =
+          (part_2 == 0) ? std::numeric_limits<int>::min() : nums2[part_2 - 1];
+      int min_2 =
+          (part_2 == s2) ? std::numeric_limits<int>::max() : nums2[part_2];
 
       if (max_1 <= min_2 && max_2 <= min_1) {
         if (((s1 + s2) & 1) == 0)

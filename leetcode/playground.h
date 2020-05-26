@@ -3,7 +3,6 @@
 #include <string>
 #include <vector>
 
-
 struct ListNode {
   int val;
   ListNode* next;
@@ -131,4 +130,8 @@ std::string stringToString(const std::string& input) {
     }
   }
   return result;
+}
+
+std::string boolToString(bool input) {
+  return input ? "True" : "False";
 }

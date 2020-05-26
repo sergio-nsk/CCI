@@ -22,6 +22,7 @@
 
 #include <cstdint>
 #include <iostream>
+#include <limits>
 #include <string>
 #include "playground.h"
 
@@ -33,11 +34,11 @@ class Solution {
       r = 10u * r + x % 10;
       x /= 10u;
     }
-    return (r <= INT_MAX) ? r : 0;
+    return (r <= std::numeric_limits<int>::max()) ? r : 0;
   }
 
   int reverse(int x) {
-    if (x == INT_MIN)  // Can't get -x: overflow.
+    if (x == std::numeric_limits<int>::min())  // Can't get -x: overflow.
       return 0;
     if (x < 0)
       return -static_cast<int>(reverse(static_cast<unsigned long long>(-x)));
