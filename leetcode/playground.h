@@ -38,6 +38,21 @@ std::vector<int> stringToIntegerVector(std::string input) {
   return output;
 }
 
+std::vector<std::string> stringToStringVector(std::string input) {
+  std::vector<std::string> output;
+  trimLeftTrailingSpaces(input);
+  trimRightTrailingSpaces(input);
+  input = input.substr(1, input.length() - 2);
+  std::stringstream ss;
+  ss.str(input);
+  std::string item;
+  char delim = ',';
+  while (getline(ss, item, delim)) {
+    output.push_back(item);
+  }
+  return output;
+}
+
 int stringToInteger(const std::string& input) {
   return std::stoi(input);
 }
@@ -60,7 +75,7 @@ std::string integerVectorToString(const std::vector<int>& list,
   return "[" + result.substr(0, result.length() - 2) + "]";
 }
 
-ListNode* stringToListNode(std::string input) {
+ListNode* stringToListNode(const std::string& input) {
   // Generate list from the input
   std::vector<int> list = stringToIntegerVector(input);
 
@@ -76,7 +91,7 @@ ListNode* stringToListNode(std::string input) {
   return ptr;
 }
 
-std::string listNodeToString(ListNode* node) {
+std::string listNodeToString(const ListNode* node) {
   if (node == nullptr) {
     return "[]";
   }
