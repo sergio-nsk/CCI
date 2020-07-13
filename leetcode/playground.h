@@ -59,18 +59,33 @@ int stringToInteger(const std::string& input) {
 
 std::string integerVectorToString(const std::vector<int>& list,
                                   int length = -1) {
-  if (length == -1) {
+  if (length == -1)
     length = list.size();
-  }
 
-  if (length == 0) {
+  if (length == 0)
     return "[]";
-  }
 
   std::string result;
   for (int index = 0; index < length; index++) {
     int number = list[index];
     result += std::to_string(number) + ", ";
+  }
+  return "[" + result.substr(0, result.length() - 2) + "]";
+}
+
+std::string vectorOfIntegerVectorsToString(
+    const std::vector<std::vector<int>>& list,
+    int length = -1) {
+  if (length == -1)
+    length = list.size();
+
+  if (length == 0)
+    return "[]";
+
+  std::string result;
+  for (int index = 0; index < length; index++) {
+    const std::vector<int>& intVector = list[index];
+    result += integerVectorToString(intVector) + ", ";
   }
   return "[" + result.substr(0, result.length() - 2) + "]";
 }
