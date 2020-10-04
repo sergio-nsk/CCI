@@ -24,54 +24,46 @@ struct TreeNode {
 
 class Solution {
  public:
-  std::vector<int> preorderTraversal(const TreeNode* root) const {
+  std::vector<int> inorderTraversal(TreeNode* root) {
     std::vector<int> out;
     Traversal(root, out);
     return out;
   }
 
  private:
-  void Traversal(const TreeNode* root, std::vector<int>& out) const {
+  void Traversal(TreeNode* root, std::vector<int>& out) {
     if (!root)
       return;
-    out.push_back(root->val);
     Traversal(root->left, out);
+    out.push_back(root->val);
     Traversal(root->right, out);
   }
 };
 
 class SolutionIterative {
  public:
-  std::vector<int> preorderTraversal(const TreeNode* root) const {
+  std::vector<int> inorderTraversal(const TreeNode* root) const {
     std::vector<int> out;
     std::stack<const TreeNode*> st;
     if (!root)
       return out;
-    out.push_back(root->val);
-    st.push(root);
     while (true) {
-      if (root->left) {
-        root = root->left;
-      } else if (root->right) {
-        root = root->right;
-      } else {
-        while (true) {
-          st.pop();
-          if (st.empty())
-            break;
-          const TreeNode* up = st.top();
-          if (up->right && root != up->right) {
-            root = up;
-            break;
-          }
-          root = up;
-        }
+      if (!root) {
         if (st.empty())
           break;
+        root = st.top();
+        st.pop();
+        out.push_back(root->val);
+        root = root->right;
+        continue;
+      }
+      if (root->left) {
+        st.push(root);
+        root = root->left;
+      } else {
+        out.push_back(root->val);
         root = root->right;
       }
-      out.push_back(root->val);
-      st.push(root);
     }
     return out;
   }
