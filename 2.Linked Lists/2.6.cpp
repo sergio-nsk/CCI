@@ -27,7 +27,7 @@ template <typename T>
 bool isPalindrome(forward_list<T> &list)
 {
     const typename forward_list<T>::Node *forward = nullptr;
-    auto len = list.length();
+    auto len = static_cast<int>(list.length());
     auto head = list.detach();
     bool ret = isPalindromeRec<T>(head, forward, len);
     list.attach(head);
