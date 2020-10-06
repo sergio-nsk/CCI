@@ -7,7 +7,9 @@
 // till leafs, but my solutions does it twice rarer. In O-notation speeds are
 // the same.
 
+#include <string>
 #include <vector>
+
 #include "tree.hpp"
 #include "treenodeiterator.hpp"
 #include "treetestutils.hpp"

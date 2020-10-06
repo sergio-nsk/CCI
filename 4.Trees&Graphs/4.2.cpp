@@ -20,7 +20,7 @@ std::unique_ptr<Node<T>> subtreeFromArray(const T* array, int start, int end) {
 }
 
 template <typename T>
-Tree<T> treeFromArray(const T* array, size_t size) {
+Tree<T> treeFromArray(const T* array, int size) {
   Tree<T> tree;
   tree.setRoot(subtreeFromArray(array, 0, size - 1));
 

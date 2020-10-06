@@ -5,6 +5,7 @@
 #include <iomanip>
 #include <iostream>
 #include <limits>
+#include <numeric>
 #include <queue>
 #include "tree.hpp"
 
@@ -30,12 +31,14 @@ void printTree(const Tree<T, WithParent, Node>& tree) {
   size_t depth = getDepth(tree.getRoot());
 
   // bottommost max leaf count
-  size_t size = std::pow(2, depth - 1);
+  size_t size = static_cast<size_t>(std::pow(2, depth - 1));
 
   // width of node, in digits
-  size_t digits = (maxValue != 0 || minValue != 0)
-                      ? std::log10(std::max(maxValue, std::abs(minValue))) + 1
-                      : 1;
+  size_t digits =
+      (maxValue != 0 || minValue != 0)
+          ? static_cast<size_t>(
+                std::log10(std::max(maxValue, std::abs(minValue))) + 1)
+          : 1;
   if (minValue < 0)
     ++digits;
 
@@ -92,7 +95,8 @@ auto treeFromArray(const T* array, size_t size) {
   };
 
   Tree<T, WithParent> tree;
-  tree.setRoot(subtreeFromArray(&array[0], nullptr, 0, size - 1));
+  tree.setRoot(
+      subtreeFromArray(&array[0], nullptr, 0, static_cast<int>(size) - 1));
   return tree;
 }
 

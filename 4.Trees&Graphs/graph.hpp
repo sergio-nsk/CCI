@@ -1,12 +1,13 @@
 #pragma once
 
+#include <functional>
 #include <deque>
 #include <memory>
 #include <unordered_map>
 #include <unordered_set>
 
 template <typename T>
-struct WeakPtrHash : public std::unary_function<std::weak_ptr<T>, size_t> {
+struct WeakPtrHash {
   size_t operator()(const std::weak_ptr<T>& wp) const {
     auto sp = wp.lock();
     return std::hash<decltype(sp)>()(sp);
@@ -14,7 +15,7 @@ struct WeakPtrHash : public std::unary_function<std::weak_ptr<T>, size_t> {
 };
 
 template <typename T>
-struct WeakPtrEqual : public std::unary_function<std::weak_ptr<T>, bool> {
+struct WeakPtrEqual {
   bool operator()(const std::weak_ptr<T>& left,
                   const std::weak_ptr<T>& right) const {
     return !left.owner_before(right) && !right.owner_before(left);
