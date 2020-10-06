@@ -12,10 +12,9 @@ bool Level::loadFromFile(const std::string &path)
     {
         for (int i = 0; i < levelLine.size(); )
         {
+            file >> levelLine[i];
             if (!file.good()) // if error or eof
                 return false;
-
-            file >> levelLine[i];
             if (levelLine[i].length() < BoardSize)
                 return false;
 
@@ -43,7 +42,7 @@ bool Level::initBoardLine(int y, const std::array<std::string, GameObject::CellC
                 if (kind == ObjectKind::Space)
                     kind = static_cast<ObjectKind>(levelLine[i][j]);
 
-                cells << 1;
+                cells = cells << 1;
 
                 if (levelLine[i][j] != static_cast<char>(ObjectKind::Space))
                 {

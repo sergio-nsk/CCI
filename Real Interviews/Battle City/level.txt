@@ -24,6 +24,6 @@ WW..BBBB..........BBBB..WW
 ..BB..BB...BBBB...BB..BB..
 ...........BHHB...........
 ...........BHHB...........
-# B - break
+# B - brick
 # W - wall
 # H - headquarters

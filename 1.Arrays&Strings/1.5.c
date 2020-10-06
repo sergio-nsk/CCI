@@ -15,8 +15,8 @@
 
 int isOneAway(const char* left, const char* right) {
   int modifiedCount = 0;
-  const int leftLen = strlen(left);
-  const int rightLen = strlen(right);
+  const int leftLen = (int)strlen(left);
+  const int rightLen = (int)strlen(right);
   if (abs(leftLen - rightLen) > 2)
     return 0;
 
