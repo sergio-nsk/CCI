@@ -68,14 +68,14 @@ class IteratorBase<Iterator, T, false> {
 template <typename T, bool WithParent>
 class Iterator : public IteratorBase<Iterator<T, WithParent>, T, WithParent> {
   using Super = IteratorBase<Iterator<T, WithParent>, T, WithParent>;
-  using Node = Node<T, WithParent>;
+  using NodeT = Node<T, WithParent>;
 
  public:
   Iterator() = default;
 
-  Iterator(const Node* node) : Super(node) {}
+  Iterator(const NodeT* node) : Super(node) {}
 
-  const Node* operator*() { return Super::currNode; }
+  const NodeT* operator*() { return Super::currNode; }
 
   bool operator!=(const Iterator& rh) {
     return Super::currNode != rh.currNode;

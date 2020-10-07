@@ -2,7 +2,9 @@
 
 #include <memory>
 
-template <typename T, bool WithParent = false, bool R = WithParent>
+template <typename T,
+          bool WithParent = false,
+          bool R = WithParent>  // R is a child type selector.
 class Node;
 
 template <typename T, bool R>
