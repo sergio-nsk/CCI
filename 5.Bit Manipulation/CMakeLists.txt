@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.4)
 
-project("2.Linked Lists" LANGUAGES CXX C)
+project("5.Bit Manipulation" LANGUAGES CXX C)
 
 file(GLOB_RECURSE one_file_sources RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.cpp")
 

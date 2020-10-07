@@ -20,17 +20,17 @@ size_t countBits(T v) {
   constexpr const T m0F = static_cast<T>(0x0F0F0F0F0F0F0F0FU);
   v = v - ((v >> 1) & m5);         // put count of each 2 bits into those 2 bits
   v = (v & m3) + ((v >> 2) & m3);  // put count of each 4 bits into those 4 bits
-  v = (v + (v >> 4)) & m0F;  // put count of each byte bits into those bytes
+  v = (v + (v >> 4)) & m0F;        // put count of each byte bits into those bytes
 #if 0
     constexpr const T m01 = static_cast<T>(0x0101010101010101U);
-    v = (v * m01);                  // B7B6..B0 --> (B7+B6+...+B0) + (B6+B5+...+B0) + ... + B0
+    v = (v * m01);                 // B7B6..B0 --> (B7+B6+...+B0) + (B6+B5+...+B0) + ... + B0
     return v >> (std::numeric_limits<T>::digits - 8);
 #else
-  if (std::numeric_limits<T>::digits > 8)
+  if constexpr (std::numeric_limits<T>::digits > 8)
     v = (v + (v >> 8));
-  if (std::numeric_limits<T>::digits > 16)
+  if constexpr (std::numeric_limits<T>::digits > 16)
     v = (v + (v >> 16));
-  if (std::numeric_limits<T>::digits > 32)
+  if constexpr (std::numeric_limits<T>::digits > 32)
     v = (v + (v >> 32));
   return v & 0xFF;
 #endif
@@ -38,7 +38,8 @@ size_t countBits(T v) {
 
 unsigned IsCompact(unsigned x) {
 #if 1
-  return (x & (x + (x & -x))) == 0;
+  return (x & (x + (x & static_cast<unsigned>(-static_cast<long long>(x))))) ==
+         0;
 
   // 00111111000000000000000000000000 is compact
   // 00111111000000000000000011000000 is not compact
