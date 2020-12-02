@@ -102,5 +102,6 @@
             80
         ]
     },
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
+    "cmake.configureOnOpen": false
 }
