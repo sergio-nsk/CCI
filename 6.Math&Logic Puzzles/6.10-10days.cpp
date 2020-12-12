@@ -1,22 +1,29 @@
+#include "6.10.hpp"
+
+#include <algorithm>
+#include <deque>
+#include <iostream>
+#include <iterator>
+#include <list>
+#include <random>
 #include <unordered_set>
 #include <vector>
-#include "6.10.hpp"
 
 // Get results that are positive for a particular day, excluding prior results.
 int getPositiveOnDay(const std::deque<TestStrip>& testStrips,
                      int day,
                      std::unordered_set<int>& previousResults);
 
-int findPoisonedBottle(std::list<Bottle>* bottles,
+int findPoisonedBottle(std::list<Bottle> bottles,
                        std::deque<TestStrip>& strips) {
-  if (bottles->size() > 1000 || strips.size() < 10)
+  if (bottles.size() > 1000 || strips.size() < 10)
     return -1;
   int tests = 4;  // three digits, plus one extra
   int nTestStrips = static_cast<int>(strips.size());
 
   // Run tests.
   for (int day = 0; day < tests; ++day)
-    runTestSet(*bottles, strips, day);
+    runTestSet(bottles, strips, day);
 
   // Get results.
   std::unordered_set<int> previousResults;
@@ -48,7 +55,7 @@ int findPoisonedBottle(std::list<Bottle>* bottles,
 }
 
 // Get strip that should be used on this bottle on this day.
-int getTestStripindexForDay(const Bottle& bottle, int day, int nTestStrips);
+int getTestStripIndexForDay(const Bottle& bottle, int day, int nTestStrips);
 
 // Run set of tests for this day.
 void runTestSet(const std::list<Bottle>& bottles,
@@ -58,13 +65,13 @@ void runTestSet(const std::list<Bottle>& bottles,
     return;  // only works for 3 days (digits)+one extra
   for (auto& bottle : bottles) {
     int index =
-        getTestStripindexForDay(bottle, day, static_cast<int>(strips.size()));
+        getTestStripIndexForDay(bottle, day, static_cast<int>(strips.size()));
     TestStrip testStrip = strips.at(index);
     testStrip.addDropOnDay(day, bottle);
   }
 }
 
-int getTestStripindexForDay(const Bottle& bottle, int day, int nTestStrips) {
+int getTestStripIndexForDay(const Bottle& bottle, int day, int nTestStrips) {
   int id = bottle.getId();
   switch (day) {
     case 0:
@@ -90,4 +97,33 @@ int getPositiveOnDay(const std::deque<TestStrip>& testStrips,
       return testStrip.getId();
   }
   return -1;
+}
+
+int main() {
+  std::random_device rd;
+  std::mt19937 rng(rd());
+  const int poisened_bottle = rng() % 1000;
+  std::list<Bottle> bottles;
+  std::generate_n(std::back_inserter(bottles), 1000,
+                  [n = 0, poisened_bottle]() mutable {
+                    Bottle b(n);
+                    if (n++ == poisened_bottle)
+                      b.setPoisoned();
+                    return b;
+                  });
+  std::deque<TestStrip> strips;
+  std::generate_n(std::back_inserter(strips), 10,
+                  [n = 0]() mutable { return TestStrip(n++); });
+  const auto& r = findPoisonedBottle(bottles, strips);
+  if (r == -1) {
+    std::cout << "Poisened bottle " << poisened_bottle
+              << " not found in 10 days" << std::endl;
+  } else if (r != poisened_bottle) {
+    std::cout << "Wrong poisened bottle " << r << " instead of the real "
+              << poisened_bottle << " found in 10 days" << std::endl;
+  } else {
+    std::cout << "Poisened bottle " << r << " found in 10 days" << std::endl;
+    return 0;
+  }
+  return 1;
 }

@@ -1,10 +1,11 @@
+#include "6.10.hpp"
+
 #include <algorithm>
 #include <iostream>
 #include <iterator>
 #include <list>
 #include <random>
 #include <utility>
-#include "6.10.hpp"
 
 std::pair<int, int> findPoisonedBottle(std::list<Bottle> bottles,
                                        std::deque<TestStrip>& strips) {

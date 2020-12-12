@@ -103,5 +103,7 @@
         ]
     },
     "editor.tabSize": 2,
-    "cmake.configureOnOpen": false
+    "cmake.configureOnOpen": false,
+    "telemetry.enableCrashReporter": false,
+    "telemetry.enableTelemetry": false
 }
