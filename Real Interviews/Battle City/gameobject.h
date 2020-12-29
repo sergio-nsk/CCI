@@ -17,7 +17,7 @@ public:
     static constexpr int CellFactor = 2;
 
     GameObject(std::bitset<CellFactor * CellFactor> &&c)
-        : cells(c)
+        : cells(std::move(c))
     {
     }
 

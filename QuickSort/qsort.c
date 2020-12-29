@@ -12,7 +12,7 @@ static void quickSort(int array[], int left, int right) {
   int pivot = array[(left + right) / 2];
   int tmp;
 
-  while (i < j) {
+  while (i <= j) {
     while (array[i] < pivot)
       ++i;
     while (array[j] > pivot)
