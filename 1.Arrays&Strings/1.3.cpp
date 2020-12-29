@@ -14,7 +14,7 @@
 // I may assume but I don't assume that the string has sufficient space at the
 // end
 bool encodeSpaces(std::string& url) {
-  int cnt = std::count(url.begin(), url.end(), ' ');
+  size_t cnt = std::count(url.begin(), url.end(), ' ');
   if (cnt == 0)
     return true;
 
@@ -26,8 +26,9 @@ bool encodeSpaces(std::string& url) {
       *to-- = '0';
       *to-- = '2';
       *to-- = '%';
-    } else
+    } else {
       *to-- = *from;
+    }
   }
   return true;
 }

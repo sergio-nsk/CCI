@@ -66,11 +66,12 @@
             "browse": {
                 "path": [
                     "${workspaceFolder}",
-                    "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/include/*"
+                    "C:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/VC/Tools/MSVC/14.27.29110/include/*"
                 ],
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""
-            }
+            },
+            "configurationProvider": "ms-vscode.cmake-tools"
         }
     ],
     "version": 4

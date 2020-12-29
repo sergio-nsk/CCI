@@ -8,8 +8,10 @@
 // getRundomNode: O(log(N)) time
 // To fill tree from sorted array: O(N) time and O(N) memory.
 
+#include <algorithm>
 #include <array>
 #include <memory>
+#include <random>
 #include <vector>
 #include "tree.hpp"
 #include "treetestutils.hpp"
@@ -73,12 +75,12 @@ class RandomTree : public Tree<T, false, RandomNode<T>> {
 };
 
 int main() {
-  std::srand(unsigned(std::time(0)));
   std::vector<int> v(7);
   std::iota(std::begin(v), std::end(v),
             0);  // Fill with 0, 1, ..., nodeCount - 1.
-  std::random_shuffle(std::begin(v), std::end(v),
-                      [](int i) { return std::rand() % i; });
+  std::random_device rd;
+  std::mt19937 g(rd());
+  std::shuffle(std::begin(v), std::end(v), g);
 
   RandomTree<int> tree;
   tree.add(v.back());

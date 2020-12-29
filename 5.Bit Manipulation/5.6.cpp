@@ -9,7 +9,7 @@
 #include <iostream>
 
 template <typename T>
-int bitSwapRequired(T a, T b)
+size_t bitSwapRequired(T a, T b)
 {
     return std::bitset<std::numeric_limits<T>::digits>(a ^ b).count();
 }

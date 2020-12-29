@@ -5,15 +5,20 @@
  a rotation of "erbottlewat").
  */
 
+#if defined(_MSC_VER)
+#include <malloc.h>
+#else
+#include <alloca.h>
+#endif
 #include <stdio.h>
 #include <string.h>
 
 int checkRotation(const char* one, const char* two) {
-  const int len = strlen(one);
+  const size_t len = strlen(one);
   if (len != strlen(two))
     return 0;
 
-  char oneone[2 * len + 1];
+  char* oneone = alloca(2 * len + 1);
 
   strcpy(oneone, one);
   strcpy(oneone + len, one);

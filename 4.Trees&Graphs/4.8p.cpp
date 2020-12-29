@@ -3,13 +3,15 @@
 // in a data structure. NOTE: This is not necessarily a binary search tree. New
 // condition: tree nodes contain links to their parents.
 
+#include <string>
+
 #include "tree.hpp"
 #include "treenodeiterator.hpp"
 #include "treetestutils.hpp"
 
 template <typename T>
 int getDepth(const Tree<T, true>& tree, const Node<T, true>* node) {
-  size_t depth = 0;
+  int depth = 0;
   if (node) {
     while (node->getParent()) {
       node = node->getParent();

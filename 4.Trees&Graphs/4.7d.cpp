@@ -23,7 +23,7 @@ bool buildProject(const Node<States>& node, std::list<Node<States>>& order) {
 
   if (node->state == States::Visiting) {
     // Dependency cycle detected
-    order.empty();
+    order.clear();
     return false;
   }
 

@@ -8,6 +8,7 @@
 // methods. getRundomNode: O(1) time To fill tree with deque additional: + O(N)
 // time + O(N) memory. To clean tree with deque additional: + O(N) time
 
+#include <array>
 #include <chrono>
 #include <deque>
 #include <iostream>
@@ -18,9 +19,9 @@ template <typename T>
 class Tree {
  public:
   Tree() {
-    // construct a trivial random generator engine from a time-based seed:
-    auto seed = std::chrono::system_clock::now().time_since_epoch().count();
-    randomEngine = std::default_random_engine(seed);
+    // Seed with a real random value, if available
+    std::random_device r;
+    randomEngine = std::default_random_engine(r());
   }
 
   class RandomNode;
