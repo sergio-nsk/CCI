@@ -66,7 +66,7 @@ void runTestSet(const std::list<Bottle>& bottles,
   for (auto& bottle : bottles) {
     int index =
         getTestStripIndexForDay(bottle, day, static_cast<int>(strips.size()));
-    TestStrip testStrip = strips.at(index);
+    TestStrip& testStrip = strips.at(index);
     testStrip.addDropOnDay(day, bottle);
   }
 }
