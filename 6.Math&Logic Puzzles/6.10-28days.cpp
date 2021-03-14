@@ -59,14 +59,14 @@ int main() {
                   [n = 0]() mutable { return TestStrip(n++); });
   const auto& r = findPoisonedBottle(bottles, strips);
   if (r.first == -1) {
-    std::cout << "Poisened bottle " << poisened_bottle << " not found in "
+    std::cout << "Poisoned bottle " << poisened_bottle << " not found in "
               << r.second << " days" << std::endl;
   } else if (r.first != poisened_bottle) {
-    std::cout << "Wrong poisened bottle " << r.first << " instead of the real "
+    std::cout << "Wrong poisoned bottle " << r.first << " instead of the real "
               << poisened_bottle << " found in " << r.second << " days"
               << std::endl;
   } else {
-    std::cout << "Poisened bottle " << r.first << " found in " << r.second
+    std::cout << "Poisoned bottle " << r.first << " found in " << r.second
               << " days" << std::endl;
     return 0;
   }
