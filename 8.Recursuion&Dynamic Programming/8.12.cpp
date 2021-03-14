@@ -52,3 +52,6 @@ bool checkValid(std::vector<int>& columns, int row1, int column1) {
   }
   return true;
 }
+
+int main(){
+}

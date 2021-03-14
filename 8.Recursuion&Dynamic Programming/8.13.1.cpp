@@ -48,3 +48,6 @@ int createStack(const std::deque<Box>& boxes,
   map[bottomIndex] = maxHeight;
   return maxHeight;
 }
+
+int main() {
+}
