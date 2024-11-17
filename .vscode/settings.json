@@ -94,17 +94,18 @@
     "C_Cpp.intelliSenseEngine": "Default",
     "[cpp]": {
         "editor.tabSize": 2,
-        "editor.rulers": [
-            80
-        ]
+        "editor.rulers": [80]
     },
     "[c]": {
         "editor.tabSize": 2,
-        "editor.rulers": [
-            80
-        ]
+        "editor.rulers": [80]
+    },
+    "[rs]": {
+        "editor.tabSize": 2,
+        "editor.rulers": [80]
     },
     "editor.tabSize": 2,
+    "editor.rulers": [80, 120],
     "cmake.configureOnOpen": false,
     "telemetry.enableCrashReporter": false,
     "telemetry.enableTelemetry": false
