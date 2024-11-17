@@ -1,7 +1,7 @@
 // Поместите параметры в этот файл, чтобы перезаписать параметры по умолчанию и пользовательские параметры.
 {
     "code-runner.executorMap": {
-        "cpp": "cd $dir && clang++ -std=c++14 -Wall -I. -I.. -g -pthread $fullFileName && ./a.out"
+        "cpp": "cd $dir && clang++ -std=c++20 -Wall -I. -I.. -g -pthread $fullFileName && ./a.out"
     },
     "files.associations": {
         "*.cpp": "cpp",
@@ -89,7 +89,7 @@
         "--variable-rgx=[a-z_][a-zA-Z0-9_]{,30}$"
     ],
     "clang.cxxflags": [
-        "-std=c++14"
+        "-std=c++20"
     ],
     "C_Cpp.intelliSenseEngine": "Default",
     "[cpp]": {

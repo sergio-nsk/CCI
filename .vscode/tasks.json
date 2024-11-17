@@ -4,12 +4,12 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "clang++14",
+            "label": "clang++20",
             "type": "process",
             "command": "clang++",
             "args": [
 				"-g",
-				"-std=c++14",
+				"-std=c++20",
 				"-I.",
 				"-Wall",
                 "-pedantic",
