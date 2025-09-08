@@ -1,4 +1,8 @@
 build
+out
+.cache
+*.exe
+*.pdb
 *.swp
 *.swo
 *.un~
