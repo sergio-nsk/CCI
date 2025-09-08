@@ -19,7 +19,7 @@ bool encodeSpaces(std::string& url) {
     return true;
 
   url.insert(url.end(), cnt * 2, 0);
-  auto to = url.end() - 1;
+  auto to = &url[url.size() - 1];
   auto from = to - cnt * 2;
   for (; to != from; --from) {
     if (*from == ' ') {
