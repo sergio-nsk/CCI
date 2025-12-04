@@ -1,0 +1,19 @@
+[package]
+name = "rust"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+googletest = "0.14.2"
+
+[[bin]]
+name = "1_1"
+path = "../1.Arrays&Strings/1.1.rs"
+
+[[bin]]
+name = "1_2"
+path = "../1.Arrays&Strings/1.2.rs"
+
+[[bin]]
+name = "1_3"
+path = "../1.Arrays&Strings/1.3.rs"

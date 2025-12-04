@@ -1,8 +1,9 @@
-build
-out
-.cache
+/.cache/
+/out/
 *.exe
+*.lock
 *.pdb
 *.swp
 *.swo
 *.un~
+/rust/target/

@@ -1,6 +1,8 @@
 // Check Permutation: Given two strings, write a method to decide if one is a
 // permutation of the other.
 
+use googletest::prelude::*;
+
 fn check_permutation(one: &str, two: &str) -> bool {
   if one.len() != two.len() {
     return false;
@@ -19,9 +21,10 @@ fn check_permutation(one: &str, two: &str) -> bool {
   return true;
 }
 
-fn main() {
-  assert!(check_permutation("TestPermutation", "PermutationTest"));
-  assert!(check_permutation("TestPermutation", "PeermutatTstion"));
-  assert!(!check_permutation("TestPermutation", "RotationTest"));
-  assert!(!check_permutation("TestPermutation", "Permutationtest"));
+#[gtest]
+fn check_permutation_assertions() {
+  expect_true!(check_permutation("TestPermutation", "PermutationTest"));
+  expect_true!(check_permutation("TestPermutation", "PeermutatTstion"));
+  expect_false!(check_permutation("TestPermutation", "RotationTest"));
+  expect_false!(check_permutation("TestPermutation", "Permutationtest"));
 }

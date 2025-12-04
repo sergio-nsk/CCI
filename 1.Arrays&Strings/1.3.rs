@@ -9,6 +9,8 @@
 // Output:
 //  "Mr%20John%20Smith"
 
+use googletest::prelude::*;
+
 fn encode_spaces(url: &str) -> String {
   let cnt = url.chars().filter(|&ch| ch == ' ').count();
   if cnt == 0 {
@@ -50,11 +52,12 @@ fn encode_spaces(url: &str) -> String {
   ret.to_string()
 }
 
-fn main() {
-  assert!(encode_spaces("Mr John Smith") == "Mr%20John%20Smith");
-  assert!(encode_spaces("a b c d e f g h i j k l m n o p q r s t u v x w z") == "a%20b%20c%20d%20e%20f%20g%20h%20i%20j%20k%20l%20m%20n%20o%20p%20q%20r%20s%20t%20u%20v%20x%20w%20z");
-  assert!(encode_spaces("a     ") == "a%20%20%20%20%20");
-  assert!(encode_spaces("     ") == "%20%20%20%20%20");
-  assert!(encode_spaces("     b") == "%20%20%20%20%20b");
-  assert!(encode_spaces("a     b") == "a%20%20%20%20%20b");
+#[gtest]
+fn encode_spaces_assertions() {
+  expect_that!(encode_spaces("Mr John Smith"), eq("Mr%20John%20Smith"));
+  expect_that!(encode_spaces("a b c d e f g h i j k l m n o p q r s t u v x w z"), eq("a%20b%20c%20d%20e%20f%20g%20h%20i%20j%20k%20l%20m%20n%20o%20p%20q%20r%20s%20t%20u%20v%20x%20w%20z"));
+  expect_that!(encode_spaces("a     "), eq("a%20%20%20%20%20"));
+  expect_that!(encode_spaces("     "), eq("%20%20%20%20%20"));
+  expect_that!(encode_spaces("     b"), eq("%20%20%20%20%20b"));
+  expect_that!(encode_spaces("a     b"), eq("a%20%20%20%20%20b"));
 }
