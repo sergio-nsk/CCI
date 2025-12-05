@@ -28,7 +28,7 @@ bool isPalindromePermutationBetter(const std::string& str) {
   for (int c : str)
     if (std::isalpha(c)) {
       int bit = std::tolower(c) - 'a';
-      oddChars.set(bit, !oddChars.test(bit));
+      oddChars.flip(bit);
     }
 
   return oddChars.count() <= 1;
