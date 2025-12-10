@@ -26,3 +26,7 @@ path = "../1.Arrays&Strings/1.4.rs"
 [[bin]]
 name = "1_5"
 path = "../1.Arrays&Strings/1.5.rs"
+
+[[bin]]
+name = "1_6"
+path = "../1.Arrays&Strings/1.6.rs"
